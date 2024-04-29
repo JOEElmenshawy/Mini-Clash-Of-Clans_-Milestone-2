@@ -105,12 +105,12 @@ wintimer = new QTimer(this);
 
 // Set a single-shot timer for 5 minutes
 wintimer->setSingleShot(true);
-wintimer->start(1 * 60* 1000); // 60 seconds in milliseconds
+wintimer->start(1 * 30* 1000); // 60 seconds in milliseconds
 
 // Connect a slot to the timeout() signal of the timer
 connect(wintimer, &QTimer::timeout, this, [=]()
 {
-    wintimer->stop();
+    scene->clear();
     view->hide();
     WonLevel* newlevel= new WonLevel;
     newlevel->show();

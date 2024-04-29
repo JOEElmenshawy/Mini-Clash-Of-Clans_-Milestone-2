@@ -15,7 +15,7 @@ Castle::Castle(Fence ** f, int c) {
 
     Enemytimer = new QTimer();
     QObject::connect(Enemytimer,SIGNAL(timeout()),this,SLOT(createEnemy()));
-    Enemytimer->start(30000);
+    Enemytimer->start(10000);
     CitizenTimer = new QTimer();
     QObject::connect(  CitizenTimer,SIGNAL(timeout()),this,SLOT(createCitizens()));
     CitizenTimer->start(50);

@@ -23,7 +23,9 @@ Enemy::Enemy()
     setPos(random_number,random_number2);
 
    MoveTimer = new QTimer();
-    connect( MoveTimer, SIGNAL(timeout()),this,SLOT (move()));
+    connect(MoveTimer,&QTimer::timeout, this, [=](){
+            move();
+    });
     MoveTimer->start(200);
 
 }
@@ -36,7 +38,6 @@ void Enemy::DecreaseHealth(){
 }
 
 void Enemy::Die(){
-    delete MoveTimer;
     MoveTimer->stop();
         scene()->removeItem(this);
         qDebug()<<"enemy died";
@@ -45,8 +46,7 @@ void Enemy::Die(){
 }
 void Enemy::move()
 {
-    if (!enemydied)
-    {
+
         qDebug()<<"enemy is still moving";
     continuemove=true;
     QList<QGraphicsItem*> colliding_items = collidingItems();
@@ -90,5 +90,5 @@ void Enemy::move()
     }
 
 
-    }
+
 }
