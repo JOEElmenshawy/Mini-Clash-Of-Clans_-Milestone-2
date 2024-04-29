@@ -3,7 +3,7 @@
 #include <QGraphicsRectItem>
 #include <QObject>
 #include "fence.h"
-
+#include <Qtime>
 class Castle: public QObject , public QGraphicsPixmapItem
 { Q_OBJECT
 public:
@@ -21,7 +21,8 @@ Fence** fencePassEnemy;
     int health;
     int Iterator;
     bool shown;
-
+    QTimer* Enemytimer;
+    QTimer*CitizenTimer;
 };
 
 #endif

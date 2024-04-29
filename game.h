@@ -21,7 +21,7 @@ public:
     bool eventFilter(QObject *obj, QEvent *event) override;
      void gameOver();
     void showview();
-
+     Castle* getCastle();
 
 public slots:
 private:

@@ -2,13 +2,12 @@
 #include <cmath>
 #include <QGraphicsScene>
 #include"game.h"
+#include <QTimer>
 extern Game *g;
-Enemy::Enemy(Castle* c,Fence ** f, int co)
+Enemy::Enemy()
 {
-
-    castleEnemy=c;
-    fenceEnemy=f;
-    fencecount=co;
+    qDebug()<<"enemy constructed";
+    enemydied=false;
     continuemove =true;
     health = 3;
     setPixmap(QPixmap(":/new/images/images/enemy.png").scaled(75, 75));
@@ -23,25 +22,32 @@ Enemy::Enemy(Castle* c,Fence ** f, int co)
     }
     setPos(random_number,random_number2);
 
-    QTimer * timer = new QTimer();
-    connect(timer, SIGNAL(timeout()),this,SLOT (move()));
-   timer->start(200);
+   MoveTimer = new QTimer();
+    connect( MoveTimer, SIGNAL(timeout()),this,SLOT (move()));
+    MoveTimer->start(200);
 
 }
 void Enemy::DecreaseHealth(){
     health--;
-    Die();
+    if(health<=0)
+    {
+        Die();
+    }
 }
 
 void Enemy::Die(){
-    if(health<=0){
+    delete MoveTimer;
+    MoveTimer->stop();
         scene()->removeItem(this);
-        delete this;
-    }
-
+        qDebug()<<"enemy died";
+        enemydied=true;
+      //  delete this;
 }
 void Enemy::move()
 {
+    if (!enemydied)
+    {
+        qDebug()<<"enemy is still moving";
     continuemove=true;
     QList<QGraphicsItem*> colliding_items = collidingItems();
     for (int i = 0, n = colliding_items.size(); i < n; ++i) {
@@ -63,26 +69,26 @@ void Enemy::move()
                 // Call member functions specific to Fence
                 C->DecreaseHealth();
                 continuemove = false;
-
+                qDebug()<<"castle touched";
             }
         }
     }
     if(continuemove){
-        if(x()> castleEnemy->x())
+        if(x()> g->getCastle()->x())
         {
             setPos(x()-5,y());
         }
-        if(x() < castleEnemy->x()){
+        if(x() < g->getCastle()->x()){
             setPos(x()+5,y());
         }
-        if(y() > castleEnemy->y()){
+        if(y() > g->getCastle()->y()){
             setPos(x(),y()-5);
         }
-        if(y() < castleEnemy->y()){
+        if(y() < g->getCastle()->y()){
             setPos(x(),y()+5);
         }
     }
 
 
-
+    }
 }

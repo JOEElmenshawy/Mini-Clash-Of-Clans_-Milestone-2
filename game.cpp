@@ -147,7 +147,8 @@ void Game::gameOver()
     LostWindow* l=new LostWindow;
    view->hide();
    l->show();
-
+   qDebug()<<" game over";
+   delete this;
 }
 
 
@@ -157,4 +158,9 @@ void Game::showview()
 {
 
     view->show();
+}
+
+Castle *Game::getCastle()
+{
+    return castle;
 }

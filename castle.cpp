@@ -13,12 +13,12 @@ Castle::Castle(Fence ** f, int c) {
     fencePassEnemy=f;
     fenceCount=c;
 
-    QTimer * timer = new QTimer();
-    QObject::connect(timer,SIGNAL(timeout()),this,SLOT(createEnemy()));
-    timer->start(3000);
-    QTimer * timer2 = new QTimer();
-    QObject::connect(timer2,SIGNAL(timeout()),this,SLOT(createCitizens()));
-    timer2->start(50);
+    Enemytimer = new QTimer();
+    QObject::connect(Enemytimer,SIGNAL(timeout()),this,SLOT(createEnemy()));
+    Enemytimer->start(30000);
+    CitizenTimer = new QTimer();
+    QObject::connect(  CitizenTimer,SIGNAL(timeout()),this,SLOT(createCitizens()));
+    CitizenTimer->start(50);
 
 
  }
@@ -26,7 +26,7 @@ Castle::Castle(Fence ** f, int c) {
 void Castle::createEnemy()
 {
 
-    Enemy* e= new Enemy(this,fencePassEnemy,fenceCount);
+    Enemy* e= new Enemy();
     scene()->addItem(e);
 
 
@@ -42,6 +42,7 @@ void Castle::createCitizens()
 }
 void Castle::DecreaseHealth(){
     health--;
+    qDebug()<<"castle health decreased";
     if(health==0){
         Die();
     }
