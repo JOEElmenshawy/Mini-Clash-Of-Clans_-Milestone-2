@@ -19,6 +19,7 @@ SOURCES += \
     lostwindow.cpp \
     main.cpp \
     mainwindow.cpp \
+    node.cpp \
     wonlevel.cpp
 
 HEADERS += \
@@ -31,6 +32,7 @@ HEADERS += \
     game.h \
     lostwindow.h \
     mainwindow.h \
+    node.h \
     wonlevel.h
 
 FORMS += \

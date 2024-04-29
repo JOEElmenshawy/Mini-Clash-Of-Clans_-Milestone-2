@@ -88,7 +88,33 @@ void Enemy::move()
             setPos(x(),y()+5);
         }
     }
+}
+std::vector<std::vector<node *> > Enemy::creatNodes(std::vector<std::vector<QGraphicsPixmapItem *> > &objects)
+{
+    int rows = objects.size();
+    int cols = objects[0].size();
 
+    std::vector<std::vector<node*>> nodes(rows, std::vector<node*>(cols));
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            nodes[i][j] = new node(objects[i][j]);
+        }
+    }
 
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            if (i > 0) nodes[i][j]->addConnection(nodes[i-1][j]); // Up
+            if (i < rows - 1) nodes[i][j]->addConnection(nodes[i+1][j]); // Down
+            if (j > 0) nodes[i][j]->addConnection(nodes[i][j-1]); // Left
+            if (j < cols - 1) nodes[i][j]->addConnection(nodes[i][j+1]); // Right
 
+            // Diagonal connections
+            if (i > 0 && j > 0) nodes[i][j]->addConnection(nodes[i-1][j-1]); // Top-left
+            if (i > 0 && j < cols - 1) nodes[i][j]->addConnection(nodes[i-1][j+1]); // Top-right
+            if (i < rows - 1 && j > 0) nodes[i][j]->addConnection(nodes[i+1][j-1]); // Bottom-left
+            if (i < rows - 1 && j < cols - 1) nodes[i][j]->addConnection(nodes[i+1][j+1]); // Bottom-right
+        }
+    }
+
+    return nodes;
 }
