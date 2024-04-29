@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
     w= new MainWindow;
     QGraphicsView view;
 
-    g= new Game;
+
 
 
 

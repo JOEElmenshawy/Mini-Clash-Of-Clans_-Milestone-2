@@ -33,7 +33,7 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::clickStart()
-{    delete g;
+{
     g= new Game;
     this->hide();
     g->showview();
