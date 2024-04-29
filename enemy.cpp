@@ -3,6 +3,8 @@
 #include <QGraphicsScene>
 #include"game.h"
 #include <QTimer>
+#include<iostream>
+
 extern Game *g;
 Enemy::Enemy()
 {
@@ -89,7 +91,7 @@ void Enemy::move()
         }
     }
 }
-std::vector<std::vector<node *> > Enemy::creatNodes(std::vector<std::vector<QGraphicsPixmapItem *> > &objects)
+std::vector<std::vector<node *> > Enemy::creatNodes(std::vector<std::vector<ObjectStruct *> > &objects)
 {
     int rows = objects.size();
     int cols = objects[0].size();
@@ -117,4 +119,59 @@ std::vector<std::vector<node *> > Enemy::creatNodes(std::vector<std::vector<QGra
     }
 
     return nodes;
+}
+
+std::vector<node *> Enemy::dijkstra(node *start, node *end)
+{
+    if (start == nullptr || end == nullptr) {
+        std::cout << "Error: start and end nodes must not be null" << std::endl;
+        return std::vector<node*>();
+    }
+
+    std::vector<node*> openSet, closedSet;
+    openSet.push_back(start);
+    while (!openSet.empty()) {
+        node* currentNode = *min_element(openSet.begin(), openSet.end(), [](node* lhs, node* rhs) {
+            return lhs->gCost < rhs->gCost;
+        });
+
+        if (currentNode->object.id == end->object.id) {
+            std::vector<node*> path;
+            while (currentNode != nullptr) {
+                path.push_back(currentNode);
+                currentNode = currentNode->parent;
+            }
+            return path;
+        }
+
+        openSet.erase(remove(openSet.begin(), openSet.end(), currentNode), openSet.end());
+        closedSet.push_back(currentNode);
+
+        for (auto& connection : currentNode->connections) {
+            node* neighbor = connection.second.first;
+            if (neighbor == nullptr) {
+                std::cout << "Error: Connection contains null node" << std::endl;
+                continue;
+            }
+            if (std::find(closedSet.begin(), closedSet.end(), neighbor) != closedSet.end()) continue;
+
+            auto neighborPair = currentNode->getNeighbor(neighbor->object.id);
+            if (neighborPair.first == nullptr) {
+                std::cout << "Error: Neighbor not found in getNeighbor" << std::endl;
+                continue;
+            }
+            float newMovementCostToNeighbor = currentNode->gCost + neighborPair.second;
+            if (newMovementCostToNeighbor < neighbor->gCost || std::find(openSet.begin(), openSet.end(), neighbor) == openSet.end()) {
+                neighbor->gCost = newMovementCostToNeighbor;
+                neighbor->parent = currentNode;
+
+                if (std::find(openSet.begin(), openSet.end(), neighbor) == openSet.end()) {
+                    openSet.push_back(neighbor);
+                }
+            }
+        }
+    }
+
+    std::cout << "No path to end node found" << std::endl;
+    return std::vector<node*>();  // return an empty path if there's no path to the end
 }

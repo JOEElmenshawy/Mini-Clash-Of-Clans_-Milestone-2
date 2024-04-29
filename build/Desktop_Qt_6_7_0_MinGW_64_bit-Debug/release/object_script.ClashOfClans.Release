@@ -8,6 +8,8 @@ release/game.o
 release/lostwindow.o
 release/main.o
 release/mainwindow.o
+release/node.o
+release/objectstruct.o
 release/wonlevel.o
 release/qrc_resources.o
 release/moc_bullet.o

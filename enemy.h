@@ -13,7 +13,8 @@ public:
     Enemy();
     void Die();
     void DecreaseHealth();
-    std::vector<std::vector<node*>> creatNodes(std::vector<std::vector< QGraphicsPixmapItem*>>& objects);
+    std::vector<std::vector<node*>> creatNodes(std::vector<std::vector< ObjectStruct*>>& objects);
+    std::vector<node*> dijkstra(node* start, node* end);
 private:
     bool continuemove;
     int health;

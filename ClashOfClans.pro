@@ -20,6 +20,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     node.cpp \
+    objectstruct.cpp \
     wonlevel.cpp
 
 HEADERS += \
@@ -33,6 +34,7 @@ HEADERS += \
     lostwindow.h \
     mainwindow.h \
     node.h \
+    objectstruct.h \
     wonlevel.h
 
 FORMS += \
