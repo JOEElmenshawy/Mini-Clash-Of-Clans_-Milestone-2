@@ -6,7 +6,8 @@
 #include<QGraphicsScene>
 #include<QGraphicsSceneMouseEvent>
 #include<QKeyEvent>
-class Defense:public QObject , public QGraphicsPixmapItem
+#include"objectstruct.h"
+class Defense:public QObject , public ObjectStruct
 {
 public:
     Defense();

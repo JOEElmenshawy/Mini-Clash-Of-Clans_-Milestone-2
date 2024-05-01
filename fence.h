@@ -3,7 +3,8 @@
 #include <QGraphicsRectItem>
 #include <QObject>
 #include<QGraphicsScene>
-class Fence:public QObject , public QGraphicsPixmapItem
+#include"objectstruct.h"
+class Fence:public QObject , public ObjectStruct
 {
 public:
     Fence();

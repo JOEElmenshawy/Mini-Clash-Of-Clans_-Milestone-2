@@ -4,10 +4,11 @@
 #include <QObject>
 #include "fence.h"
 #include <Qtime>
-class Castle: public QObject , public QGraphicsPixmapItem
+#include"objectstruct.h"
+class Castle: public QObject , public ObjectStruct
 { Q_OBJECT
 public:
-    Castle(Fence **,int);
+    Castle();
     void Die();
     void DecreaseHealth();
 
@@ -16,8 +17,6 @@ void createEnemy();
     void createCitizens();
 
 private:
-Fence** fencePassEnemy;
-    int fenceCount;
     int health;
     int Iterator;
     bool shown;

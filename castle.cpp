@@ -7,15 +7,13 @@
 
 
 extern Game *g;
-Castle::Castle(Fence ** f, int c) {
+Castle::Castle() {
     Iterator=0;
     health=40;
-    fencePassEnemy=f;
-    fenceCount=c;
 
     Enemytimer = new QTimer();
     QObject::connect(Enemytimer,SIGNAL(timeout()),this,SLOT(createEnemy()));
-    Enemytimer->start(10000);
+    Enemytimer->start(5000);
     CitizenTimer = new QTimer();
     QObject::connect(  CitizenTimer,SIGNAL(timeout()),this,SLOT(createCitizens()));
     CitizenTimer->start(50);

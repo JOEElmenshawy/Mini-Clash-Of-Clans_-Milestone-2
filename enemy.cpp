@@ -15,10 +15,10 @@ Enemy::Enemy()
     setPixmap(QPixmap(":/new/images/images/enemy.png").scaled(75, 75));
 
     int random_number = rand() %(1080);
-    while(random_number>100&&random_number<980)
+    while((random_number>100&&random_number<980)||random_number>1080)
     {random_number=rand()%1080;}
     int random_number2= rand()%750;
-    while(random_number2>70 &&random_number2<680)
+    while((random_number2>70 &&random_number2<680)||random_number2>750)
     {
         random_number2= rand()%750;
     }

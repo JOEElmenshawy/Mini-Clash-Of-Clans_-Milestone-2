@@ -118,6 +118,11 @@ Makefile: ../../ClashOfClans.pro C:/Qt/6.7.0/mingw_64/mkspecs/win32-g++/qmake.co
 		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_labswavefrontmesh.pri \
 		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_labswavefrontmesh_private.pri \
 		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_linguist.pri \
+		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_multimedia.pri \
+		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_multimedia_private.pri \
+		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_multimediaquick_private.pri \
+		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_multimediawidgets.pri \
+		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_multimediawidgets_private.pri \
 		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_network.pri \
 		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_network_private.pri \
 		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_opengl.pri \
@@ -159,19 +164,30 @@ Makefile: ../../ClashOfClans.pro C:/Qt/6.7.0/mingw_64/mkspecs/win32-g++/qmake.co
 		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_qmlxmllistmodel.pri \
 		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_qmlxmllistmodel_private.pri \
 		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quick.pri \
+		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quick3dspatialaudio_private.pri \
 		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quick_private.pri \
 		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2.pri \
 		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2_private.pri \
+		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2basic.pri \
+		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2basic_private.pri \
 		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2basicstyleimpl.pri \
 		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2basicstyleimpl_private.pri \
+		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2fusion.pri \
+		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2fusion_private.pri \
 		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2fusionstyleimpl.pri \
 		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2fusionstyleimpl_private.pri \
+		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2imagine.pri \
+		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2imagine_private.pri \
 		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2imaginestyleimpl.pri \
 		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2imaginestyleimpl_private.pri \
 		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2impl.pri \
 		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2impl_private.pri \
+		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2material.pri \
+		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2material_private.pri \
 		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2materialstyleimpl.pri \
 		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2materialstyleimpl_private.pri \
+		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2universal.pri \
+		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2universal_private.pri \
 		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2universalstyleimpl.pri \
 		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2universalstyleimpl_private.pri \
 		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2windowsstyleimpl.pri \
@@ -195,6 +211,8 @@ Makefile: ../../ClashOfClans.pro C:/Qt/6.7.0/mingw_64/mkspecs/win32-g++/qmake.co
 		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickwidgets_private.pri \
 		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_shadertools.pri \
 		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_shadertools_private.pri \
+		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_spatialaudio.pri \
+		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_spatialaudio_private.pri \
 		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_sql.pri \
 		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_sql_private.pri \
 		C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_svg.pri \
@@ -297,6 +315,11 @@ C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_labssharedimage_private.pri:
 C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_labswavefrontmesh.pri:
 C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_labswavefrontmesh_private.pri:
 C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_linguist.pri:
+C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_multimedia.pri:
+C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_multimedia_private.pri:
+C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_multimediaquick_private.pri:
+C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_multimediawidgets.pri:
+C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_multimediawidgets_private.pri:
 C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_network.pri:
 C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_network_private.pri:
 C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_opengl.pri:
@@ -338,19 +361,30 @@ C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_qmlworkerscript_private.pri:
 C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_qmlxmllistmodel.pri:
 C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_qmlxmllistmodel_private.pri:
 C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quick.pri:
+C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quick3dspatialaudio_private.pri:
 C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quick_private.pri:
 C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2.pri:
 C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2_private.pri:
+C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2basic.pri:
+C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2basic_private.pri:
 C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2basicstyleimpl.pri:
 C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2basicstyleimpl_private.pri:
+C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2fusion.pri:
+C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2fusion_private.pri:
 C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2fusionstyleimpl.pri:
 C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2fusionstyleimpl_private.pri:
+C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2imagine.pri:
+C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2imagine_private.pri:
 C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2imaginestyleimpl.pri:
 C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2imaginestyleimpl_private.pri:
 C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2impl.pri:
 C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2impl_private.pri:
+C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2material.pri:
+C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2material_private.pri:
 C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2materialstyleimpl.pri:
 C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2materialstyleimpl_private.pri:
+C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2universal.pri:
+C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2universal_private.pri:
 C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2universalstyleimpl.pri:
 C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2universalstyleimpl_private.pri:
 C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickcontrols2windowsstyleimpl.pri:
@@ -374,6 +408,8 @@ C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickwidgets.pri:
 C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_quickwidgets_private.pri:
 C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_shadertools.pri:
 C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_shadertools_private.pri:
+C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_spatialaudio.pri:
+C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_spatialaudio_private.pri:
 C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_sql.pri:
 C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_sql_private.pri:
 C:/Qt/6.7.0/mingw_64/mkspecs/modules/qt_lib_svg.pri:

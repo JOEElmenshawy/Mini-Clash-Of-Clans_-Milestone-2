@@ -11,7 +11,6 @@
 #include <QObject>
 #include <QTimer>
 #include<QMouseEvent>
-
 class  Game: public QGraphicsView
 {
 
@@ -22,7 +21,7 @@ public:
      void gameOver();
     void showview();
      Castle* getCastle();
-
+    std::vector<std::vector<ObjectStruct*>> objects;
 public slots:
 private:
     QGraphicsView * view;

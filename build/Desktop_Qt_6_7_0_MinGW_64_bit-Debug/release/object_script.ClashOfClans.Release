@@ -2,6 +2,7 @@ release/bullet.o
 release/castle.o
 release/citizens.o
 release/defense.o
+release/empty.o
 release/enemy.o
 release/fence.o
 release/game.o

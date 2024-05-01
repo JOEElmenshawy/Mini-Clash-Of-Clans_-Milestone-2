@@ -13,6 +13,7 @@ SOURCES += \
     castle.cpp \
     citizens.cpp \
     defense.cpp \
+    empty.cpp \
     enemy.cpp \
     fence.cpp \
     game.cpp \
@@ -28,6 +29,7 @@ HEADERS += \
     castle.h \
     citizens.h \
     defense.h \
+    empty.h \
     enemy.h \
     fence.h \
     game.h \

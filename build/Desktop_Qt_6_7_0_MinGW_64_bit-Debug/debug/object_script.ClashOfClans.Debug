@@ -2,6 +2,7 @@ debug/bullet.o
 debug/castle.o
 debug/citizens.o
 debug/defense.o
+debug/empty.o
 debug/enemy.o
 debug/fence.o
 debug/game.o
