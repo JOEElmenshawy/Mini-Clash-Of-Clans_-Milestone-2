@@ -16,10 +16,14 @@ public:
     std::vector<std::vector<node*>> creatNodes(std::vector<std::vector< ObjectStruct*>>& objects);
     std::vector<node*> dijkstra(node* start, node* end);
 private:
+    int enemyRow;
+    int enemyCol;
     bool continuemove;
     int health;
     bool enemydied;
     QTimer* MoveTimer;
+    int itr;
+    std::vector<std::vector<node*>> nodes;
 public slots:
     void move();
 

@@ -14,21 +14,47 @@ Enemy::Enemy()
     health = 3;
     setPixmap(QPixmap(":/new/images/images/enemy.png").scaled(75, 75));
 
-    int random_number = rand() %(1080);
-    while((random_number>100&&random_number<980)||random_number>1080)
-    {random_number=rand()%1080;}
+    int random_number = rand() %(1125);
+
     int random_number2= rand()%750;
-    while((random_number2>70 &&random_number2<680)||random_number2>750)
+
+    if (rand()%2)
     {
+        random_number=rand()%1125;
         random_number2= rand()%750;
+        while (random_number2>20 &&random_number2<730)
+            {
+                random_number2= rand()%750;
+            }
+    }
+    else
+    {   random_number=rand()%1125;
+        random_number2= rand()%750;
+        while(random_number>20&&random_number<1105)
+        {
+            random_number=rand()%1125;
+        }
     }
     setPos(random_number,random_number2);
-
+    enemyRow=y()/75;
+    enemyCol=x()/75;
+    qDebug()<<enemyRow<<" "<<enemyCol<<"\n";
    MoveTimer = new QTimer();
     connect(MoveTimer,&QTimer::timeout, this, [=](){
             move();
     });
-    MoveTimer->start(200);
+  //  MoveTimer->start(200);
+     nodes = creatNodes(g->objects);
+
+    node* start = nodes[enemyRow][enemyCol];
+     node* end = nodes[g->getCastle()->castleRow][g->getCastle()->castleColumn];
+      std::vector<node*> path = dijkstra(start, end);
+
+    for (auto it = path.rbegin(); it != path.rend(); it++) {
+          qDebug() << (*it)->object.id << ": ";
+      qDebug()  << "(" << (*it)->object.x() << ", " << (*it)->object.y() << ")" << "\n";
+    }
+        qDebug()  << "\n";
 
 }
 void Enemy::DecreaseHealth(){

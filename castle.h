@@ -11,7 +11,8 @@ public:
     Castle();
     void Die();
     void DecreaseHealth();
-
+    int castleRow;
+    int castleColumn;
 public slots:
 void createEnemy();
     void createCitizens();

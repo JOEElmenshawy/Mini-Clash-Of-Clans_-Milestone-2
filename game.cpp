@@ -52,12 +52,7 @@ Game::Game()
     castlephoto=castlephoto.scaledToHeight(75);
     castle = new Castle();
     castle->setPixmap(castlephoto);
-    // QGraphicsPixmapItem emptylands[120];
-    // for(int i=0;i<120;i++){
-    //     emptylands[i].
-    // }
-    int emptyiterator =0;
-    int fenceiterator=0;
+
     QGraphicsPixmapItem boardimages[10][15];
     for(int i=0;i<10;i++){
         for(int j=0;j<15;j++){
@@ -71,6 +66,8 @@ Game::Game()
                 objects[i][j]= castle;
                 objects[i][j]->setPos(75*j,75*i);
                 scene->addItem(objects[i][j]);
+                castle->castleRow=i;
+                castle->castleColumn=j;
             }
             else if (boarddata[i][j] == 2)
             {
@@ -86,14 +83,18 @@ Game::Game()
             }
         }
     }
-
+    for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < 15; j++) {
+            objects[i][j]->id =  "(" + std::to_string(i) + ", " + std::to_string(j) + ")";
+        }
+    }
 
     view->viewport()->installEventFilter(this);
 wintimer = new QTimer(this);
 
 // Set a single-shot timer for 5 minutes
 wintimer->setSingleShot(true);
-wintimer->start(1 * 30* 1000); // 60 seconds in milliseconds
+wintimer->start(1 * 80* 1000); // 60 seconds in milliseconds
 
 // Connect a slot to the timeout() signal of the timer
 connect(wintimer, &QTimer::timeout, this, [=]()
