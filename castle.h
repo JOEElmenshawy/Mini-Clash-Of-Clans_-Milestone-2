@@ -14,15 +14,13 @@ public:
     int castleRow;
     int castleColumn;
 public slots:
-void createEnemy();
-    void createCitizens();
+
 
 private:
     int health;
-    int Iterator;
+
     bool shown;
-    QTimer* Enemytimer;
-    QTimer*CitizenTimer;
+
 };
 
 #endif

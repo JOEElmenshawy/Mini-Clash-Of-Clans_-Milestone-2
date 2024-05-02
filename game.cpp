@@ -16,9 +16,10 @@
 #include "empty.h"
 #include "wonlevel.h"
 #include "lostwindow.h"
+#include "citizens.h"
 extern MainWindow *w;
 Game::Game()
-{
+{   Iterator=0;
     NumberOfFences=0;
     view= new QGraphicsView;
     view->setWindowTitle("Game Project");
@@ -63,7 +64,7 @@ Game::Game()
                scene->addItem(objects[i][j]);
             }else if(boarddata[i][j] == 1)
             {
-                objects[i][j]= castle;
+                objects[i][j]=castle;
                 objects[i][j]->setPos(75*j,75*i);
                 scene->addItem(objects[i][j]);
                 castle->castleRow=i;
@@ -104,10 +105,27 @@ connect(wintimer, &QTimer::timeout, this, [=]()
     WonLevel* newlevel= new WonLevel;
     newlevel->show();
 });
-
+Enemytimer = new QTimer();
+QObject::connect(Enemytimer,SIGNAL(timeout()),this,SLOT(createEnemy()));
+Enemytimer->start(2000);
+CitizenTimer = new QTimer();
+QObject::connect(  CitizenTimer,SIGNAL(timeout()),this,SLOT(createCitizens()));
+CitizenTimer->start(50);
 }
 
-
+void Game::createEnemy()
+{
+    Enemy* e= new Enemy();
+    scene->addItem(e);
+    qDebug()<<"create enemy called";
+}
+void Game::createCitizens()
+{
+    if(Iterator<5)
+    {Citizens* c = new Citizens;
+    scene->addItem(c);}
+    Iterator++;
+}
 void Game::mousePressEvent(QMouseEvent *event)
 {
     bullet* B = new bullet(event->pos().x(), event->pos().y());

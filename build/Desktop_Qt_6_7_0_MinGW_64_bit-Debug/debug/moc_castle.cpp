@@ -35,10 +35,7 @@ namespace {
 #ifdef QT_MOC_HAS_STRINGDATA
 struct qt_meta_stringdata_CLASSCastleENDCLASS_t {};
 constexpr auto qt_meta_stringdata_CLASSCastleENDCLASS = QtMocHelpers::stringData(
-    "Castle",
-    "createEnemy",
-    "",
-    "createCitizens"
+    "Castle"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
@@ -51,20 +48,12 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSCastleENDCLASS[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
+       0,    0, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
        0,       // signalCount
-
- // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   26,    2, 0x0a,    1 /* Public */,
-       3,    0,   27,    2, 0x0a,    2 /* Public */,
-
- // slots: parameters
-    QMetaType::Void,
-    QMetaType::Void,
 
        0        // eod
 };
@@ -77,26 +66,16 @@ Q_CONSTINIT const QMetaObject Castle::staticMetaObject = { {
     nullptr,
     qt_incomplete_metaTypeArray<qt_meta_stringdata_CLASSCastleENDCLASS_t,
         // Q_OBJECT / Q_GADGET
-        QtPrivate::TypeAndForceComplete<Castle, std::true_type>,
-        // method 'createEnemy'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'createCitizens'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>
+        QtPrivate::TypeAndForceComplete<Castle, std::true_type>
     >,
     nullptr
 } };
 
 void Castle::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
-    if (_c == QMetaObject::InvokeMetaMethod) {
-        auto *_t = static_cast<Castle *>(_o);
-        (void)_t;
-        switch (_id) {
-        case 0: _t->createEnemy(); break;
-        case 1: _t->createCitizens(); break;
-        default: ;
-        }
-    }
+    (void)_o;
+    (void)_id;
+    (void)_c;
     (void)_a;
 }
 
@@ -118,17 +97,6 @@ void *Castle::qt_metacast(const char *_clname)
 int Castle::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QObject::qt_metacall(_c, _id, _a);
-    if (_id < 0)
-        return _id;
-    if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 2)
-            qt_static_metacall(this, _c, _id, _a);
-        _id -= 2;
-    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 2)
-            *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 2;
-    }
     return _id;
 }
 QT_WARNING_POP

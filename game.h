@@ -11,9 +11,9 @@
 #include <QObject>
 #include <QTimer>
 #include<QMouseEvent>
-class  Game: public QGraphicsView
+class  Game:public QGraphicsView
 {
-
+Q_OBJECT
 public:
     Game();
      void mousePressEvent(QMouseEvent* event) override ;
@@ -23,6 +23,8 @@ public:
      Castle* getCastle();
     std::vector<std::vector<ObjectStruct*>> objects;
 public slots:
+    void createEnemy();
+    void createCitizens();
 private:
     QGraphicsView * view;
 QGraphicsScene * scene;
@@ -31,6 +33,9 @@ QGraphicsScene * scene;
     Defense* defense;
     int NumberOfFences;
     QTimer* wintimer;
+    QTimer* Enemytimer;
+    QTimer*CitizenTimer;
+    int Iterator;
 };
 
 #endif // GAME_H

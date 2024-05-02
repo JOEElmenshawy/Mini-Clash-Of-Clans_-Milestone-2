@@ -17,6 +17,7 @@ release/moc_bullet.o
 release/moc_castle.o
 release/moc_citizens.o
 release/moc_enemy.o
+release/moc_game.o
 release/moc_lostwindow.o
 release/moc_mainwindow.o
 release/moc_wonlevel.o

@@ -17,6 +17,7 @@ debug/moc_bullet.o
 debug/moc_castle.o
 debug/moc_citizens.o
 debug/moc_enemy.o
+debug/moc_game.o
 debug/moc_lostwindow.o
 debug/moc_mainwindow.o
 debug/moc_wonlevel.o
