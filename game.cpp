@@ -91,6 +91,14 @@ Game::Game()
     }
 
     view->viewport()->installEventFilter(this);
+
+Enemytimer = new QTimer();
+QObject::connect(Enemytimer,SIGNAL(timeout()),this,SLOT(createEnemy()));
+Enemytimer->start(2000);
+CitizenTimer = new QTimer();
+QObject::connect(  CitizenTimer,SIGNAL(timeout()),this,SLOT(createCitizens()));
+CitizenTimer->start(50);
+
 wintimer = new QTimer(this);
 
 // Set a single-shot timer for 5 minutes
@@ -99,18 +107,12 @@ wintimer->start(1 * 80* 1000); // 60 seconds in milliseconds
 
 // Connect a slot to the timeout() signal of the timer
 connect(wintimer, &QTimer::timeout, this, [=]()
-{
-    scene->clear();
-    view->hide();
-    WonLevel* newlevel= new WonLevel;
-    newlevel->show();
-});
-Enemytimer = new QTimer();
-QObject::connect(Enemytimer,SIGNAL(timeout()),this,SLOT(createEnemy()));
-Enemytimer->start(2000);
-CitizenTimer = new QTimer();
-QObject::connect(  CitizenTimer,SIGNAL(timeout()),this,SLOT(createCitizens()));
-CitizenTimer->start(50);
+        {
+            scene->clear();
+            view->hide();
+            WonLevel* newlevel= new WonLevel;
+            newlevel->show();
+        });
 }
 
 void Game::createEnemy()

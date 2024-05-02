@@ -56,6 +56,28 @@ Enemy::Enemy()
       qDebug()  << "(" << (*it)->object.x() << ", " << (*it)->object.y() << ")" << "\n";
     }
         qDebug()  << "\n";
+    itr = path.size()-2;
+    currNode = path[itr];
+
+    distance = sqrt(pow(this->x() - currNode->object.x(), 2) + pow(this->y() - currNode->object.y(), 2));
+
+    dX = 0;
+     dY = 0;
+    MoveTimer = new QTimer(this);
+    connect( MoveTimer,&QTimer::timeout, this, [=](){
+
+        distance = sqrt(pow(this->x() - currNode->object.x(), 2) + pow(this->y() - currNode->object.y(), 2));
+        if(distance < 30)
+        {
+            if(itr != 0){
+                itr--;
+                currNode = path[itr];
+            }
+        }
+        if(enemydied != true){
+            move();
+        }});
+    MoveTimer->start(75);
 
 }
 void Enemy::printNodes() const {
@@ -100,49 +122,57 @@ void Enemy::Die(){
       //  delete this;
 }
 void Enemy::move()
-{
+{    dX = (currNode->object.x() - this->x()) / distance;
+    dY = (currNode->object.y() - this->y()) / distance;
 
-        qDebug()<<"enemy is still moving";
-    continuemove=true;
-    QList<QGraphicsItem*> colliding_items = collidingItems();
-    for (int i = 0, n = colliding_items.size(); i < n; ++i) {
-        if (typeid(*(colliding_items[i])) == typeid(Fence)) {
-            Fence *fence = dynamic_cast<Fence*>(colliding_items[i]);
-            if (fence) {
-                // Call member functions specific to Fence
-                fence->DecreaseHealth();
-                continuemove = false;
+    float newX = this->x() + 2*dX;
+    float newY = this->y() + 2*dY;
 
-            }
+
+    QList<QGraphicsItem *> colliding_items = collidingItems();
+    for (int i = 0; i < colliding_items.size(); ++i) {
+        if (Fence* fenceItem = dynamic_cast<Fence*>(colliding_items[i])) {
+            stepBack();
+            fenceItem->DecreaseHealth();
+            // crack->play();
+            return;
+        }
+        else if(Castle* castleItem = dynamic_cast<Castle*>(colliding_items[i])){
+
+            stepBack();
+            castleItem->DecreaseHealth();
+            // crack->play();
+            return;
         }
     }
-    QList<QGraphicsItem*> colliding_items2 = collidingItems();
-    for (int i = 0, n = colliding_items2.size(); i < n; ++i) {
-        if (typeid(*(colliding_items2[i])) == typeid(Castle)) {
-            Castle *C = dynamic_cast<Castle*>(colliding_items2[i]);
-            if (C) {
-                // Call member functions specific to Fence
-                C->DecreaseHealth();
-                continuemove = false;
-                qDebug()<<"castle touched";
-            }
-        }
+
+
+    //    std::cout<< currNode->object.x() - this->x() << std::endl;
+    //    std::cout<< currNode->object.y() - this->y() << std::endl;
+
+    //    std::cout<< currNode->object.x() << std::endl;
+    //    std::cout<< currNode->object.y() << std::endl;
+
+
+
+    if(newX > this->x()){
+        setPos(newX, newY);
     }
-    if(continuemove){
-        if(x()> g->getCastle()->x())
-        {
-            setPos(x()-5,y());
-        }
-        if(x() < g->getCastle()->x()){
-            setPos(x()+5,y());
-        }
-        if(y() > g->getCastle()->y()){
-            setPos(x(),y()-5);
-        }
-        if(y() < g->getCastle()->y()){
-            setPos(x(),y()+5);
-        }
+    else{
+        setPos(newX, newY);
     }
+}
+
+void Enemy::stepBack(){
+
+    dX = (currNode->object.x() - this->x()) / distance;
+    dY = (currNode->object.y() - this->y()) / distance;
+
+    float newX = this->x() - 5*dX;
+    float newY = this->y() - 5*dY;
+
+    setPos(newX, newY);
+
 }
 std::vector<std::vector<node *> > Enemy::creatNodes(std::vector<std::vector<ObjectStruct *> > &objects)
 {

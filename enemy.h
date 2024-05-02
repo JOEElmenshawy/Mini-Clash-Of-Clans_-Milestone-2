@@ -17,6 +17,7 @@ public:
     void printNodes() const;
     void printConnections() const ;
     std::vector<node*> dijkstra(node* start, node* end);
+    void stepBack();
 private:
     int enemyRow;
     int enemyCol;
@@ -26,6 +27,9 @@ private:
     QTimer* MoveTimer;
     int itr;
     std::vector<std::vector<node*>> nodes;
+     node* currNode;
+    float dX, dY, Delta;
+    float distance;
 public slots:
     void move();
 
