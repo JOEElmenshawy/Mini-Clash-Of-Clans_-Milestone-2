@@ -7,6 +7,9 @@ Fence::Fence() {
     fencephoto=fencephoto.scaledToWidth(75);
     fencephoto=fencephoto.scaledToHeight(75);
     setPixmap(fencephoto);
+    name = "fence";
+    ID = 1;
+    healthBar = 1500;
 }
 
 void Fence::DecreaseHealth(){

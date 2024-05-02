@@ -14,6 +14,8 @@ public:
     void Die();
     void DecreaseHealth();
     std::vector<std::vector<node*>> creatNodes(std::vector<std::vector< ObjectStruct*>>& objects);
+    void printNodes() const;
+    void printConnections() const ;
     std::vector<node*> dijkstra(node* start, node* end);
 private:
     int enemyRow;

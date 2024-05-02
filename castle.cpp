@@ -17,7 +17,9 @@ Castle::Castle() {
     CitizenTimer = new QTimer();
     QObject::connect(  CitizenTimer,SIGNAL(timeout()),this,SLOT(createCitizens()));
     CitizenTimer->start(50);
-
+    name = "Castle";
+    ID = 2;
+    healthBar = 3000;
 
  }
 

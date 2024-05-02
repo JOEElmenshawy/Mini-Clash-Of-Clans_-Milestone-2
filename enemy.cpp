@@ -45,7 +45,8 @@ Enemy::Enemy()
     });
   //  MoveTimer->start(200);
      nodes = creatNodes(g->objects);
-
+    //printNodes();
+     printConnections();
     node* start = nodes[enemyRow][enemyCol];
      node* end = nodes[g->getCastle()->castleRow][g->getCastle()->castleColumn];
       std::vector<node*> path = dijkstra(start, end);
@@ -56,6 +57,32 @@ Enemy::Enemy()
     }
         qDebug()  << "\n";
 
+}
+void Enemy::printNodes() const {
+    // Iterate over each row of nodes
+    for (const auto& row : nodes) {
+        // Iterate over each node in the row
+        for (const auto& node_ptr : row) {
+            // Print the coordinates of the node
+            qDebug() << "Node: (" << node_ptr->object.x() << ", " << node_ptr->object.y() << ")";
+        }
+    }
+}
+void Enemy::printConnections() const {
+    // Iterate over each row of nodes
+    for (const auto& row : nodes) {
+        // Iterate over each node in the row
+        for (const auto& node_ptr : row) {
+            // Print connections of the current node
+            qDebug() << "Connections of Node (" << node_ptr->object.x() << ", " << node_ptr->object.y() << "):";
+
+            // Iterate over each connection of the current node
+            for (const auto& connection : node_ptr->connections) {
+                // Print the coordinates of the connected node
+                qDebug() << "  Connected Node: (" << connection.second.first->object.x() << ", " << connection.second.first->object.y() << ")";
+            }
+        }
+    }
 }
 void Enemy::DecreaseHealth(){
     health--;
