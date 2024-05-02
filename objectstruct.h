@@ -7,7 +7,6 @@
 class ObjectStruct : public QGraphicsPixmapItem
 {
 public:
-    float healthBar;
     int ID;
     std::string id;
     QString name;

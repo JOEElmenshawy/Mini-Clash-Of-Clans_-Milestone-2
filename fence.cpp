@@ -9,7 +9,6 @@ Fence::Fence() {
     setPixmap(fencephoto);
     name = "fence";
     ID = 1;
-    healthBar = 1500;
 }
 
 void Fence::DecreaseHealth(){

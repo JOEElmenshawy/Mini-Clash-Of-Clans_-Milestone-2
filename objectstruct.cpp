@@ -15,7 +15,6 @@ int ObjectStruct::getID(){
 
 ObjectStruct::ObjectStruct(const ObjectStruct& other) {
     setPos(other.pos());
-    healthBar = other.healthBar;
     ID = other.ID;
     id = other.id;
     name = other.name;

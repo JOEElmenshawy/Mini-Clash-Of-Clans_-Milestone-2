@@ -9,11 +9,10 @@
 extern Game *g;
 Castle::Castle() {
 
-    health=40;
+    health=30;
 
 
     name = "Castle";
-    healthBar = 3000;
 
  }
 

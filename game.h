@@ -21,6 +21,7 @@ public:
      void gameOver();
     void showview();
      Castle* getCastle();
+    int cannonx,cannony;
     std::vector<std::vector<ObjectStruct*>> objects;
 public slots:
     void createEnemy();

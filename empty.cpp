@@ -8,6 +8,5 @@ empty::empty()
     setPixmap(grassphoto);
     name = "";
     ID = 0;
-    healthBar = 600;
 
 }

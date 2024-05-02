@@ -74,6 +74,8 @@ Game::Game()
             {
                 objects[i][j]= new Defense();
                 objects[i][j]->setPos(75*j,75*i);
+                cannonx=75*j;
+                cannony=75*i;
                 scene->addItem(objects[i][j]);
             }
             else
@@ -94,7 +96,7 @@ Game::Game()
 
 Enemytimer = new QTimer();
 QObject::connect(Enemytimer,SIGNAL(timeout()),this,SLOT(createEnemy()));
-Enemytimer->start(2000);
+Enemytimer->start(7000);
 CitizenTimer = new QTimer();
 QObject::connect(  CitizenTimer,SIGNAL(timeout()),this,SLOT(createCitizens()));
 CitizenTimer->start(50);
@@ -131,7 +133,7 @@ void Game::createCitizens()
 void Game::mousePressEvent(QMouseEvent *event)
 {
     bullet* B = new bullet(event->pos().x(), event->pos().y());
-    B->setPos(75*5,75*5);
+    B->setPos(cannonx,cannony);
     scene->addItem(B);
     qDebug() << event->pos().x();
 
