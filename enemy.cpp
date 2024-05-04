@@ -6,12 +6,13 @@
 #include<iostream>
 
 extern Game *g;
-Enemy::Enemy()
+Enemy::Enemy(int d)
 {
+    damage=d;
     qDebug()<<"enemy constructed";
     enemydied=false;
     continuemove =true;
-    health = 3;
+    health = 200;
     setPixmap(QPixmap(":/new/images/images/enemy.png").scaled(75, 75));
 
     int random_number = rand() %(1125);
@@ -46,15 +47,15 @@ Enemy::Enemy()
   //  MoveTimer->start(200);
      nodes = creatNodes(g->objects);
     //printNodes();
-     printConnections();
+   //  printConnections();
     node* start = nodes[enemyRow][enemyCol];
      node* end = nodes[g->getCastle()->castleRow][g->getCastle()->castleColumn];
       std::vector<node*> path = dijkstra(start, end);
 
-    for (auto it = path.rbegin(); it != path.rend(); it++) {
-          qDebug() << (*it)->object.id << ": ";
-      qDebug()  << "(" << (*it)->object.x() << ", " << (*it)->object.y() << ")" << "\n";
-    }
+    // for (auto it = path.rbegin(); it != path.rend(); it++) {
+    //       qDebug() << (*it)->object.id << ": ";
+    //   qDebug()  << "(" << (*it)->object.x() << ", " << (*it)->object.y() << ")" << "\n";
+    // }
         qDebug()  << "\n";
     itr = path.size()-2;
     currNode = path[itr];
@@ -106,8 +107,8 @@ void Enemy::printConnections() const {
         }
     }
 }
-void Enemy::DecreaseHealth(){
-    health--;
+void Enemy::DecreaseHealth(int d){
+    health-=d;
     if(health<=0)
     {
         Die();
@@ -115,6 +116,7 @@ void Enemy::DecreaseHealth(){
 }
 
 void Enemy::Die(){
+    g->enemydestroyed++;
     MoveTimer->stop();
         scene()->removeItem(this);
         qDebug()<<"enemy died";
@@ -133,14 +135,14 @@ void Enemy::move()
     for (int i = 0; i < colliding_items.size(); ++i) {
         if (Fence* fenceItem = dynamic_cast<Fence*>(colliding_items[i])) {
             stepBack();
-            fenceItem->DecreaseHealth();
+            fenceItem->DecreaseHealth(damage);
             // crack->play();
             return;
         }
         else if(Castle* castleItem = dynamic_cast<Castle*>(colliding_items[i])){
 
             stepBack();
-            castleItem->DecreaseHealth();
+            castleItem->DecreaseHealth(damage);
             // crack->play();
             return;
         }

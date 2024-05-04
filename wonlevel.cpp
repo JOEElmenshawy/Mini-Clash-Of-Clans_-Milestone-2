@@ -3,6 +3,7 @@
 #include "ui_wonlevel.h"
 #include <QPushButton>
 extern Game *g;
+extern int* hard;
 WonLevel::WonLevel(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::WonLevel)
@@ -23,7 +24,8 @@ WonLevel::~WonLevel()
 void WonLevel::on_pushButton_clicked()
 {
     delete g;
-    g=new Game();
+    *hard+=1;
+    g=new Game(*hard);
     this->hide();
     g->showview();
 

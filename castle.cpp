@@ -17,8 +17,8 @@ Castle::Castle() {
  }
 
 
-void Castle::DecreaseHealth(){
-    health--;
+void Castle::DecreaseHealth(int d){
+    health-=d;
     qDebug()<<"castle health decreased";
     if(health==0){
         Die();

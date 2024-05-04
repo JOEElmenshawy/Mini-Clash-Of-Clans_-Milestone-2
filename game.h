@@ -15,19 +15,22 @@ class  Game:public QGraphicsView
 {
 Q_OBJECT
 public:
-    Game();
+    Game(int h);
+    bool powerup;
      void mousePressEvent(QMouseEvent* event) override ;
     bool eventFilter(QObject *obj, QEvent *event) override;
      void gameOver();
     void showview();
      Castle* getCastle();
     int cannonx,cannony;
+     int enemydestroyed;
     std::vector<std::vector<ObjectStruct*>> objects;
 public slots:
     void createEnemy();
     void createCitizens();
 private:
     QGraphicsView * view;
+    int hardness;
 QGraphicsScene * scene;
     Castle* castle;
     Fence** fence;

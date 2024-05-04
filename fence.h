@@ -8,7 +8,7 @@ class Fence:public QObject , public ObjectStruct
 {
 public:
     Fence();
-    void DecreaseHealth();
+    void DecreaseHealth(int d);
     void Die();
 
 private:

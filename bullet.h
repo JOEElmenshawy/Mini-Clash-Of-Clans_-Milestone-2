@@ -10,11 +10,12 @@ class bullet:public QObject, public QGraphicsPixmapItem
 public slots:
     void move();
 public:
-    bullet(int x, int y);
+    bullet(int x, int y,int d);
     double CalculatePos();
 private:
     int targetX;
     int targetY;
+    int damage;
 
 };
 

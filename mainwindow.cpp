@@ -14,6 +14,7 @@
 #include "defense.h"
 #include "fence.h"
 extern Game *g;
+extern int* hard;
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -35,7 +36,9 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-    g= new Game;
+    hard=new int;
+    *hard=1;
+    g= new Game(*hard);
     this->hide();
     g->showview();
 }

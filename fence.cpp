@@ -11,8 +11,8 @@ Fence::Fence() {
     ID = 1;
 }
 
-void Fence::DecreaseHealth(){
-    health--;
+void Fence::DecreaseHealth(int d){
+    health-=d;
     Die();
 }
 

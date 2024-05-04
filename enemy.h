@@ -10,9 +10,9 @@ class Enemy:public QObject , public QGraphicsPixmapItem
 {
     Q_OBJECT
 public:
-    Enemy();
+    Enemy(int d);
     void Die();
-    void DecreaseHealth();
+    void DecreaseHealth(int d);
     std::vector<std::vector<node*>> creatNodes(std::vector<std::vector< ObjectStruct*>>& objects);
     void printNodes() const;
     void printConnections() const ;
@@ -21,6 +21,7 @@ public:
 private:
     int enemyRow;
     int enemyCol;
+    int damage;
     bool continuemove;
     int health;
     bool enemydied;

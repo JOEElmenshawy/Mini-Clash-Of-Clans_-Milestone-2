@@ -17,13 +17,15 @@
 #include "wonlevel.h"
 #include "lostwindow.h"
 #include "citizens.h"
-
+#include <QMediaPlayer>
 #include<QAudioOutput>
 extern MainWindow *w;
-Game::Game()
+Game::Game(int h)
 
 {
-
+    hardness=h;
+    enemydestroyed=0;
+    powerup=false;
     QMediaPlayer *Q = new QMediaPlayer;
     Q ->setSource(QUrl("qrc:/Aud/bgsound.mp3"));
 
@@ -106,9 +108,10 @@ Game::Game()
 
     view->viewport()->installEventFilter(this);
 
+// createEnemy();
 Enemytimer = new QTimer();
 QObject::connect(Enemytimer,SIGNAL(timeout()),this,SLOT(createEnemy()));
-Enemytimer->start(7000);
+Enemytimer->start(9000);
 CitizenTimer = new QTimer();
 QObject::connect(  CitizenTimer,SIGNAL(timeout()),this,SLOT(createCitizens()));
 CitizenTimer->start(50);
@@ -117,11 +120,13 @@ wintimer = new QTimer(this);
 
 // Set a single-shot timer for 5 minutes
 wintimer->setSingleShot(true);
-wintimer->start(1 * 80* 1000); // 60 seconds in milliseconds
+wintimer->start(1 * 60* 1000); // 60 seconds in milliseconds
 
 // Connect a slot to the timeout() signal of the timer
 connect(wintimer, &QTimer::timeout, this, [=]()
         {
+             Enemytimer->stop();
+            CitizenTimer->stop();
             scene->clear();
             view->hide();
             WonLevel* newlevel= new WonLevel;
@@ -131,7 +136,7 @@ connect(wintimer, &QTimer::timeout, this, [=]()
 
 void Game::createEnemy()
 {
-    Enemy* e= new Enemy();
+    Enemy* e= new Enemy(hardness);
     scene->addItem(e);
     qDebug()<<"create enemy called";
 }
@@ -144,7 +149,10 @@ void Game::createCitizens()
 }
 void Game::mousePressEvent(QMouseEvent *event)
 {
-    bullet* B = new bullet(event->pos().x(), event->pos().y());
+    int k=0;
+    if(powerup)
+    k+=10*(6-hardness)*0.1;
+    bullet* B = new bullet(event->pos().x(), event->pos().y(),k+10*(6-hardness));
     B->setPos(cannonx,cannony);
     scene->addItem(B);
     qDebug() << event->pos().x();
@@ -165,8 +173,11 @@ bool Game::eventFilter(QObject *obj, QEvent *event)
 
 void Game::gameOver()
 {
-    scene->clear();
+
     wintimer->stop();
+    Enemytimer->stop();
+    CitizenTimer->stop();
+     scene->clear();
     LostWindow* l=new LostWindow;
    view->hide();
    l->show();

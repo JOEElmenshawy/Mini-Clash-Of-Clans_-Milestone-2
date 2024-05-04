@@ -10,7 +10,7 @@ class Castle: public QObject , public ObjectStruct
 public:
     Castle();
     void Die();
-    void DecreaseHealth();
+    void DecreaseHealth(int d);
     int castleRow;
     int castleColumn;
 public slots:

@@ -5,8 +5,9 @@
 #include<QGraphicsScene>
 #include"enemy.h"
 #include"game.h"
+#include "mainwindow.h"
 extern Game *g;
-bullet::bullet(int x, int y):targetX(x),targetY(y) {
+bullet::bullet(int x, int y,int d):targetX(x),targetY(y),damage(d) {
     this->setPixmap(QPixmap (":/new/images/images/cannonball_PNG10.png").scaled(15,15));
 
     QTimer * timer= new QTimer(this);
@@ -23,20 +24,27 @@ double bullet::CalculatePos()
 }
 void bullet::move()
 {
+    if(g->enemydestroyed==2&&!g->powerup)
+    {
+        g->powerup=true;
+        damage+=damage*0.10;
+        qDebug()<<"damage increasedddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd";
+    }
     QList<QGraphicsItem*> colliding_items = collidingItems();
     for (int i = 0, n = colliding_items.size(); i < n; ++i) {
         if (typeid(*(colliding_items[i])) == typeid(Enemy)) {
             Enemy *e = dynamic_cast<Enemy*>(colliding_items[i]);
             if (e) {
+
                 // Call member functions specific to Fence
-                e->DecreaseHealth();
+                e->DecreaseHealth(damage);
                 scene()->removeItem(this);
                 delete this;
 
             }
         }
     }
-    if(x()<0|| x()>1080||y()<0||y()>750)
+    if(x()<0|| x()>1125||y()<0||y()>750)
     {
         scene()->removeItem(this);
             delete this;
