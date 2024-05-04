@@ -20,10 +20,9 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     QPixmap p(":/new/images/images/MainMenue.jpg");
+    p=p.scaled(ui->imagelabel->size());
     ui->imagelabel->setPixmap(p);
-    QPushButton *pushButton = new QPushButton("Start Game", ui->imagelabel);
-    pushButton->setGeometry(QRect(100, 100, 100, 30));
-    connect(pushButton, &QPushButton::clicked, this, &MainWindow::clickStart);
+
 
 }
 
@@ -32,9 +31,20 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::clickStart()
+
+
+void MainWindow::on_pushButton_clicked()
 {
     g= new Game;
     this->hide();
     g->showview();
 }
+
+
+void MainWindow::on_pushButton_3_clicked()
+{
+    delete g;
+    this->hide();
+    delete this;
+}
+

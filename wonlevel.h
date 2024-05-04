@@ -14,8 +14,10 @@ class WonLevel : public QDialog
 public:
     explicit WonLevel(QWidget *parent = nullptr);
     ~WonLevel();
-public slots:
-    void nextLevel();
+
+private slots:
+    void on_pushButton_clicked();
+
 private:
     Ui::WonLevel *ui;
 };

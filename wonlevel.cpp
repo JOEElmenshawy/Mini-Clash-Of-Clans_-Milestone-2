@@ -8,11 +8,10 @@ WonLevel::WonLevel(QWidget *parent)
     , ui(new Ui::WonLevel)
 {
     ui->setupUi(this);
-    QPixmap p(":/new/images/images/MainMenue.jpg");
+    QPixmap p(":/new/images/images/NextLevel.png");
+    p=p.scaled(ui->nextlevellabel->size());
     ui->nextlevellabel->setPixmap(p);
-    QPushButton *pushButton = new QPushButton("Next Level", ui->nextlevellabel);
-    pushButton->setGeometry(QRect(100, 100, 100, 30));
-    connect(pushButton, &QPushButton::clicked, this, &WonLevel::nextLevel);
+
 }
 
 WonLevel::~WonLevel()
@@ -20,7 +19,8 @@ WonLevel::~WonLevel()
     delete ui;
 }
 
-void WonLevel::nextLevel()
+
+void WonLevel::on_pushButton_clicked()
 {
     delete g;
     g=new Game();
@@ -28,3 +28,4 @@ void WonLevel::nextLevel()
     g->showview();
 
 }
+

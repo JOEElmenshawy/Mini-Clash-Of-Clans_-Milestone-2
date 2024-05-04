@@ -14,5 +14,7 @@
         <file>images/MainMenue.jpg</file>
         <file>images/citizenWorker.png</file>
         <file>images/cannonball_PNG10.png</file>
+        <file>images/GameOver.png</file>
+        <file>images/NextLevel.png</file>
     </qresource>
 </RCC>

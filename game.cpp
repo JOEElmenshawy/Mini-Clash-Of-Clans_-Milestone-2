@@ -17,9 +17,21 @@
 #include "wonlevel.h"
 #include "lostwindow.h"
 #include "citizens.h"
+
+#include<QAudioOutput>
 extern MainWindow *w;
 Game::Game()
-{   Iterator=0;
+
+{
+
+    QMediaPlayer *Q = new QMediaPlayer;
+    Q ->setSource(QUrl("qrc:/Aud/bgsound.mp3"));
+
+    QAudioOutput *audio = new QAudioOutput;
+    Q->setAudioOutput(audio);
+    audio->setVolume(20);
+    Q->play();
+    Iterator=0;
     NumberOfFences=0;
     view= new QGraphicsView;
     view->setWindowTitle("Game Project");

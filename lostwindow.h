@@ -14,8 +14,10 @@ class LostWindow : public QDialog
 public:
     explicit LostWindow(QWidget *parent = nullptr);
     ~LostWindow();
-public slots:
-    void returnMainMenu();
+
+private slots:
+    void on_pushButton_clicked();
+
 private:
     Ui::LostWindow *ui;
 };

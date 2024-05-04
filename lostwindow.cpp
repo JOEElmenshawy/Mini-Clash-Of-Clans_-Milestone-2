@@ -8,11 +8,10 @@ LostWindow::LostWindow(QWidget *parent)
     , ui(new Ui::LostWindow)
 {
     ui->setupUi(this);
-    QPixmap p(":/new/images/images/MainMenue.jpg");
+    QPixmap p(":/new/images/images/GameOver.png");
+    p=p.scaled(ui->returnmenulabel->size());
     ui->returnmenulabel->setPixmap(p);
-    QPushButton *pushButton = new QPushButton("Return to main menu", ui->returnmenulabel);
-    pushButton->setGeometry(QRect(100, 100, 100, 30));
-    connect(pushButton, &QPushButton::clicked, this, &LostWindow::returnMainMenu);
+
 
 }
 
@@ -22,11 +21,11 @@ LostWindow::~LostWindow()
 
 }
 
-void LostWindow::returnMainMenu()
+
+void LostWindow::on_pushButton_clicked()
 {
     MainWindow *w = new MainWindow;
     this->hide();
     w->show();
 }
-
 
