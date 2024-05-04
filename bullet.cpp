@@ -7,10 +7,18 @@
 #include "healthmarker.h"
 #include"game.h"
 #include "mainwindow.h"
+#include<QMediaPlayer>
+#include<QAudioOutput>
 extern Game *g;
 bullet::bullet(int x, int y,int d):targetX(x),targetY(y),damage(d) {
     this->setPixmap(QPixmap (":/new/images/images/cannonball_PNG10.png").scaled(15,15));
+    QMediaPlayer *Q = new QMediaPlayer;
+    Q ->setSource(QUrl("qrc:/new/Sound/Sound/bulletshot.wav"));
 
+    QAudioOutput *audio = new QAudioOutput;
+    Q->setAudioOutput(audio);
+    audio->setVolume(50);
+    Q->play();
     QTimer * timer= new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(move()));
     timer->start(50);
@@ -39,6 +47,13 @@ void bullet::move()
                 scene()->removeItem(h);
                 delete h;
                 g->boostshootpower();
+                QMediaPlayer *Q = new QMediaPlayer;
+                Q ->setSource(QUrl("qrc:/new/Sound/Sound/HealthMarkersActivated.mp3"));
+
+                QAudioOutput *audio = new QAudioOutput;
+                Q->setAudioOutput(audio);
+                audio->setVolume(50);
+                Q->play();
             }
         }
     }

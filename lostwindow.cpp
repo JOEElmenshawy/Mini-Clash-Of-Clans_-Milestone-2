@@ -11,6 +11,13 @@ LostWindow::LostWindow(QWidget *parent)
     QPixmap p(":/new/images/images/GameOver.png");
     p=p.scaled(ui->returnmenulabel->size());
     ui->returnmenulabel->setPixmap(p);
+    QMediaPlayer *Q = new QMediaPlayer;
+    Q ->setSource(QUrl("qrc:/new/Sound/Sound/GameOver.wav"));
+
+    QAudioOutput *audio = new QAudioOutput;
+    Q->setAudioOutput(audio);
+    audio->setVolume(50);
+    Q->play();
 
 
 }

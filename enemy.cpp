@@ -4,7 +4,8 @@
 #include"game.h"
 #include <QTimer>
 #include<iostream>
-
+#include<QMediaPlayer>
+#include<QAudioOutput>
 extern Game *g;
 Enemy::Enemy(int d)
 {
@@ -106,10 +107,18 @@ void Enemy::printConnections() const {
 }
 void Enemy::DecreaseHealth(int d){
     health-=d;
+    QMediaPlayer *Q = new QMediaPlayer;
+    Q ->setSource(QUrl("qrc:/new/Sound/Sound/dead.mp3"));
+
+    QAudioOutput *audio = new QAudioOutput;
+    Q->setAudioOutput(audio);
+    audio->setVolume(50);
+    Q->play();
     if(health<=0)
     {
         Die();
     }
+
 }
 
 void Enemy::Die(){
@@ -156,6 +165,11 @@ void Enemy::stepBack(){
     float newY = this->y() - 5*dY;
 
     setPos(newX, newY);
+
+}
+
+Enemy::~Enemy()
+{
 
 }
 std::vector<std::vector<node *> > Enemy::creatNodes(std::vector<std::vector<ObjectStruct *> > &objects)

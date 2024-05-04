@@ -1,6 +1,8 @@
 #include "wongame.h"
 #include "ui_wongame.h"
 #include <mainwindow.h>
+#include<QMediaPlayer>
+#include<QAudioOutput>
 extern Game *g;
 wongame::wongame(QWidget *parent) :
     QDialog(parent),
@@ -10,7 +12,13 @@ wongame::wongame(QWidget *parent) :
     QPixmap p(":/new/images/images/You win.jpg");
     p=p.scaled(ui->returnmenulabel->size());
     ui->returnmenulabel->setPixmap(p);
+    QMediaPlayer *Q = new QMediaPlayer;
+    Q ->setSource(QUrl("qrc:/new/Sound/Sound/WINGAME.mp3"));
 
+    QAudioOutput *audio = new QAudioOutput;
+    Q->setAudioOutput(audio);
+    audio->setVolume(50);
+    Q->play();
 
 }
 

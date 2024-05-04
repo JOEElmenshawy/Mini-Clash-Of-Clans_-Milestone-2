@@ -18,6 +18,7 @@ public:
     void printConnections() const ;
     std::vector<node*> dijkstra(node* start, node* end);
     void stepBack();
+    ~Enemy();
 private:
     int enemyRow;
     int enemyCol;

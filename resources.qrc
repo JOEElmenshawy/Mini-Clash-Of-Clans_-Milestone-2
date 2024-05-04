@@ -19,4 +19,15 @@
         <file>images/You win.jpg</file>
         <file>images/health maker.png</file>
     </qresource>
+    <qresource prefix="/new/Sound">
+        <file>Sound/background.mp3</file>
+        <file>Sound/bulletshot.wav</file>
+        <file>Sound/dead.mp3</file>
+        <file>Sound/HealthMarkersActivated.mp3</file>
+        <file>Sound/level-win-6416.mp3</file>
+        <file>Sound/WINGAME.mp3</file>
+        <file>Sound/HealthMarkersDeactivation.mp3</file>
+        <file>Sound/GameOver.wav</file>
+    </qresource>
+    <qresource prefix="/new/prefix1"/>
 </RCC>

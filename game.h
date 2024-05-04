@@ -11,6 +11,8 @@
 #include <QObject>
 #include <QTimer>
 #include<QMouseEvent>
+#include <QMediaPlayer>
+#include<QAudioOutput>
 class  Game:public QGraphicsView
 {
 Q_OBJECT
@@ -27,6 +29,7 @@ public:
     int cannonx,cannony;
      int enemydestroyed;
     std::vector<std::vector<ObjectStruct*>> objects;
+     ~Game();
 public slots:
     void createEnemy();
     void createCitizens();
@@ -35,6 +38,7 @@ private:
     QGraphicsView * view;
     int hardness;
     int extradamage;
+    QMediaPlayer*Q;
 QGraphicsScene * scene;
     Castle* castle;
     Fence** fence;

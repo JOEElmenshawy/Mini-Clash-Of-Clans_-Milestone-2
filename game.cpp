@@ -30,8 +30,8 @@ Game::Game(int h)
     enemydestroyed=0;
     extradamage=0;
     powerup=false;
-    QMediaPlayer *Q = new QMediaPlayer;
-    Q ->setSource(QUrl("qrc:/Aud/bgsound.mp3"));
+    Q = new QMediaPlayer;
+    Q ->setSource(QUrl("qrc:/new/Sound/Sound/background.mp3"));
 
     QAudioOutput *audio = new QAudioOutput;
     Q->setAudioOutput(audio);
@@ -203,6 +203,12 @@ void Game::gameOver()
    delete this;
 }
 
+Game::~Game()
+{
+    Q->stop();
+    delete Q;
+}
+
 
 
 
@@ -226,6 +232,16 @@ void Game::boostshootpower()
     connect( boostdamagetimer, &QTimer::timeout, this, [=]()
             {
          extradamage-=30;
+         QMediaPlayer*Z= new QMediaPlayer;
+         Z ->setSource(QUrl("qrc:/new/Sound/Sound/HealthMarkersDeactivation.mp3"));
+
+         QAudioOutput *audio2 = new QAudioOutput;
+         Z->setAudioOutput(audio2);
+         audio2->setVolume(20);
+         Q->stop();
+         Z->play();
+         Q->play();
+
          qDebug()<<"bonus damage stopped";
             });
 }
