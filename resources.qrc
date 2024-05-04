@@ -16,5 +16,7 @@
         <file>images/cannonball_PNG10.png</file>
         <file>images/GameOver.png</file>
         <file>images/NextLevel.png</file>
+        <file>images/You win.jpg</file>
+        <file>images/health maker.png</file>
     </qresource>
 </RCC>

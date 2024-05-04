@@ -18,11 +18,13 @@ SOURCES += \
     enemy.cpp \
     fence.cpp \
     game.cpp \
+    healthmarker.cpp \
     lostwindow.cpp \
     main.cpp \
     mainwindow.cpp \
     node.cpp \
     objectstruct.cpp \
+    wongame.cpp \
     wonlevel.cpp
 
 HEADERS += \
@@ -34,15 +36,18 @@ HEADERS += \
     enemy.h \
     fence.h \
     game.h \
+    healthmarker.h \
     lostwindow.h \
     mainwindow.h \
     node.h \
     objectstruct.h \
+    wongame.h \
     wonlevel.h
 
 FORMS += \
     lostwindow.ui \
     mainwindow.ui \
+    wongame.ui \
     wonlevel.ui
 
 # Default rules for deployment.

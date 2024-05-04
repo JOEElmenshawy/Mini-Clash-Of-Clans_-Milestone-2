@@ -4,6 +4,7 @@
 #include<qmath.h> //to use sin , cos ... etc
 #include<QGraphicsScene>
 #include"enemy.h"
+#include "healthmarker.h"
 #include"game.h"
 #include "mainwindow.h"
 extern Game *g;
@@ -28,7 +29,18 @@ void bullet::move()
     {
         g->powerup=true;
         damage+=damage*0.10;
-        qDebug()<<"damage increasedddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd";
+        qDebug()<<"damage increased";
+    }
+    QList<QGraphicsItem*> colliding_items1 = collidingItems();
+    for (int i = 0, n = colliding_items1.size(); i < n; ++i) {
+        if (typeid(*(colliding_items1[i])) == typeid(HealthMarker)) {
+            HealthMarker* h  = dynamic_cast<HealthMarker*>(colliding_items1[i]);
+            if (h) {
+                scene()->removeItem(h);
+                delete h;
+                g->boostshootpower();
+            }
+        }
     }
     QList<QGraphicsItem*> colliding_items = collidingItems();
     for (int i = 0, n = colliding_items.size(); i < n; ++i) {

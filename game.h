@@ -17,10 +17,12 @@ Q_OBJECT
 public:
     Game(int h);
     bool powerup;
+    bool powermarker;
      void mousePressEvent(QMouseEvent* event) override ;
     bool eventFilter(QObject *obj, QEvent *event) override;
      void gameOver();
     void showview();
+     void boostshootpower();
      Castle* getCastle();
     int cannonx,cannony;
      int enemydestroyed;
@@ -28,9 +30,11 @@ public:
 public slots:
     void createEnemy();
     void createCitizens();
+    void createMarkers();
 private:
     QGraphicsView * view;
     int hardness;
+    int extradamage;
 QGraphicsScene * scene;
     Castle* castle;
     Fence** fence;
@@ -39,6 +43,8 @@ QGraphicsScene * scene;
     QTimer* wintimer;
     QTimer* Enemytimer;
     QTimer*CitizenTimer;
+    QTimer* MarkerTimer;
+    QTimer* boostdamagetimer;
     int Iterator;
 };
 

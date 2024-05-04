@@ -15,22 +15,19 @@ Enemy::Enemy(int d)
     health = 200;
     setPixmap(QPixmap(":/new/images/images/enemy.png").scaled(75, 75));
 
-    int random_number = rand() %(1125);
+    int random_number = rand() %1125;
 
     int random_number2= rand()%750;
 
     if (rand()%2)
     {
-        random_number=rand()%1125;
-        random_number2= rand()%750;
         while (random_number2>20 &&random_number2<730)
             {
                 random_number2= rand()%750;
             }
     }
     else
-    {   random_number=rand()%1125;
-        random_number2= rand()%750;
+    {
         while(random_number>20&&random_number<1105)
         {
             random_number=rand()%1125;
@@ -136,33 +133,18 @@ void Enemy::move()
         if (Fence* fenceItem = dynamic_cast<Fence*>(colliding_items[i])) {
             stepBack();
             fenceItem->DecreaseHealth(damage);
-            // crack->play();
             return;
         }
         else if(Castle* castleItem = dynamic_cast<Castle*>(colliding_items[i])){
 
             stepBack();
             castleItem->DecreaseHealth(damage);
-            // crack->play();
             return;
         }
     }
 
-
-    //    std::cout<< currNode->object.x() - this->x() << std::endl;
-    //    std::cout<< currNode->object.y() - this->y() << std::endl;
-
-    //    std::cout<< currNode->object.x() << std::endl;
-    //    std::cout<< currNode->object.y() << std::endl;
-
-
-
-    if(newX > this->x()){
         setPos(newX, newY);
-    }
-    else{
-        setPos(newX, newY);
-    }
+
 }
 
 void Enemy::stepBack(){

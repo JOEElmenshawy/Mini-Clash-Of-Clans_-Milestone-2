@@ -19,12 +19,16 @@
 #include "citizens.h"
 #include <QMediaPlayer>
 #include<QAudioOutput>
+#include "wongame.h"
+#include "healthmarker.h"
 extern MainWindow *w;
 Game::Game(int h)
 
 {
     hardness=h;
+    qDebug()<<hardness;
     enemydestroyed=0;
+    extradamage=0;
     powerup=false;
     QMediaPlayer *Q = new QMediaPlayer;
     Q ->setSource(QUrl("qrc:/Aud/bgsound.mp3"));
@@ -114,13 +118,15 @@ QObject::connect(Enemytimer,SIGNAL(timeout()),this,SLOT(createEnemy()));
 Enemytimer->start(9000);
 CitizenTimer = new QTimer();
 QObject::connect(  CitizenTimer,SIGNAL(timeout()),this,SLOT(createCitizens()));
-CitizenTimer->start(50);
-
+CitizenTimer->start(1);
+MarkerTimer = new QTimer();
+QObject::connect(MarkerTimer,SIGNAL(timeout()),this,SLOT(createMarkers()));
+MarkerTimer->start(15000);
 wintimer = new QTimer(this);
 
 // Set a single-shot timer for 5 minutes
 wintimer->setSingleShot(true);
-wintimer->start(1 * 60* 1000); // 60 seconds in milliseconds
+wintimer->start(1 * 40* 1000); // 60 seconds in milliseconds
 
 // Connect a slot to the timeout() signal of the timer
 connect(wintimer, &QTimer::timeout, this, [=]()
@@ -129,8 +135,14 @@ connect(wintimer, &QTimer::timeout, this, [=]()
             CitizenTimer->stop();
             scene->clear();
             view->hide();
+            if(hardness==5)
+            {
+                wongame* gamewon=new wongame;
+                gamewon->show();
+            }
+            else{
             WonLevel* newlevel= new WonLevel;
-            newlevel->show();
+                newlevel->show();}
         });
 }
 
@@ -147,12 +159,18 @@ void Game::createCitizens()
     scene->addItem(c);}
     Iterator++;
 }
+
+void Game::createMarkers()
+{
+    HealthMarker* h= new HealthMarker;
+    scene->addItem(h);
+}
 void Game::mousePressEvent(QMouseEvent *event)
 {
     int k=0;
     if(powerup)
     k+=10*(6-hardness)*0.1;
-    bullet* B = new bullet(event->pos().x(), event->pos().y(),k+10*(6-hardness));
+    bullet* B = new bullet(event->pos().x(), event->pos().y(),extradamage+k+10*(6-hardness));
     B->setPos(cannonx,cannony);
     scene->addItem(B);
     qDebug() << event->pos().x();
@@ -192,6 +210,24 @@ void Game::showview()
 {
 
     view->show();
+}
+
+void Game::boostshootpower()
+{
+    qDebug()<<"bonus damage started";
+    extradamage+=30;
+    boostdamagetimer = new QTimer(this);
+
+    // Set a single-shot timer
+    boostdamagetimer->setSingleShot(true);
+     boostdamagetimer->start(1 * 5* 1000);
+
+    // Connect a slot to the timeout() signal of the timer
+    connect( boostdamagetimer, &QTimer::timeout, this, [=]()
+            {
+         extradamage-=30;
+         qDebug()<<"bonus damage stopped";
+            });
 }
 
 Castle *Game::getCastle()
