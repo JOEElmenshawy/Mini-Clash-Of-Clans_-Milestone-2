@@ -3,9 +3,18 @@
 #include <QGraphicsScene>
 #include"game.h"
 #include <QTimer>
+#include <set>
 #include<iostream>
+#include <stack>
 #include<QMediaPlayer>
 #include<QAudioOutput>
+#include <iostream>
+#include <vector>
+#include <stack>
+#include <map>
+#include <unordered_map>
+#include <algorithm>
+#include <limits>
 extern Game *g;
 Enemy::Enemy(int d)
 {
@@ -50,10 +59,10 @@ Enemy::Enemy(int d)
      node* end = nodes[g->getCastle()->castleRow][g->getCastle()->castleColumn];
       std::vector<node*> path = dijkstra(start, end);
 
-    // for (auto it = path.rbegin(); it != path.rend(); it++) {
-    //       qDebug() << (*it)->object.id << ": ";
-    //   qDebug()  << "(" << (*it)->object.x() << ", " << (*it)->object.y() << ")" << "\n";
-    // }
+    for (auto it = path.rbegin(); it != path.rend(); it++) {
+          qDebug() << (*it)->object.id << ": ";
+      qDebug()  << "(" << (*it)->object.x() << ", " << (*it)->object.y() << ")" << "\n";
+    }
         qDebug()  << "\n";
     itr = path.size()-2;
     currNode = path[itr];
@@ -201,58 +210,48 @@ std::vector<std::vector<node *> > Enemy::creatNodes(std::vector<std::vector<Obje
 
     return nodes;
 }
-
+const double INF = 9999999;
+using namespace std;
 std::vector<node *> Enemy::dijkstra(node *start, node *end)
-{
-    if (start == nullptr || end == nullptr) {
-        std::cout << "Error: start and end nodes must not be null" << std::endl;
-        return std::vector<node*>();
+{ std::vector<node*> path;
+    std::unordered_map<node*, double> dist;
+    std::unordered_map<node*, node*> prev;
+    std::set<std::pair<double, node*>> pq;
+
+    for (const auto& row : nodes) {
+        for (const auto& node_ptr : row) {
+            dist[node_ptr] = INF;
+            prev[node_ptr] = nullptr;
+            pq.insert({ INF, node_ptr });
+        }
     }
 
-    std::vector<node*> openSet, closedSet;
-    openSet.push_back(start);
-    while (!openSet.empty()) {
-        node* currentNode = *min_element(openSet.begin(), openSet.end(), [](node* lhs, node* rhs) {
-            return lhs->gCost < rhs->gCost;
-        });
+    dist[start] = 0;
+    pq.insert({ 0, start });
 
-        if (currentNode->object.id == end->object.id) {
-            std::vector<node*> path;
-            while (currentNode != nullptr) {
-                path.push_back(currentNode);
-                currentNode = currentNode->parent;
-            }
-            return path;
-        }
+    while (!pq.empty()) {
+        node* u = pq.begin()->second;
+        pq.erase(pq.begin());
 
-        openSet.erase(remove(openSet.begin(), openSet.end(), currentNode), openSet.end());
-        closedSet.push_back(currentNode);
+        for (const auto& connection : u->connections) {
+            node* v = connection.second.first;
+            double weight = connection.second.second;
 
-        for (auto& connection : currentNode->connections) {
-            node* neighbor = connection.second.first;
-            if (neighbor == nullptr) {
-                std::cout << "Error: Connection contains null node" << std::endl;
-                continue;
-            }
-            if (std::find(closedSet.begin(), closedSet.end(), neighbor) != closedSet.end()) continue;
-
-            auto neighborPair = currentNode->getNeighbor(neighbor->object.id);
-            if (neighborPair.first == nullptr) {
-                std::cout << "Error: Neighbor not found in getNeighbor" << std::endl;
-                continue;
-            }
-            float newMovementCostToNeighbor = currentNode->gCost + neighborPair.second;
-            if (newMovementCostToNeighbor < neighbor->gCost || std::find(openSet.begin(), openSet.end(), neighbor) == openSet.end()) {
-                neighbor->gCost = newMovementCostToNeighbor;
-                neighbor->parent = currentNode;
-
-                if (std::find(openSet.begin(), openSet.end(), neighbor) == openSet.end()) {
-                    openSet.push_back(neighbor);
-                }
+            double alt = dist[u] + weight;
+            if (alt < dist[v]) {
+                pq.erase({ dist[v], v });
+                dist[v] = alt;
+                prev[v] = u;
+                pq.insert({ dist[v], v });
             }
         }
     }
 
-    std::cout << "No path to end node found" << std::endl;
-    return std::vector<node*>();  // return an empty path if there's no path to the end
+    node* current = end;
+    while (current != nullptr) {
+        path.push_back(current);
+        current = prev[current];
+    }
+
+    return path;
 }

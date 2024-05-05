@@ -1,17 +1,14 @@
 #include "node.h"
 
-node::node(ObjectStruct* _object) : object(*_object), gCost(0.0f), hCost(0.0f), parent(nullptr),id(_object->id)
+node::node(ObjectStruct* _object) : object(*_object), parent(nullptr),id(_object->id)
 {
 }
 
 
-float node::fCost() const
-{
-    return gCost + hCost;
-}
+
 
 void node::addConnection(node* otherNode){
-    connections[otherNode->id] = std::make_pair(otherNode, otherNode->health);
+    connections[otherNode->id] = std::make_pair(otherNode, otherNode->object.costToPass);
   //  qDebug()<<otherNode->id;
 }
 

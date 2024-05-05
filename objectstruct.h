@@ -7,14 +7,12 @@
 class ObjectStruct : public QGraphicsPixmapItem
 {
 public:
-    int ID;
     std::string id;
     QString name;
-public:
+    int costToPass;
     ObjectStruct();
     ObjectStruct(const ObjectStruct& other); // copy constructor
     ~ObjectStruct();
-    int getID();
 };
 
 #endif // OBJECTSTRUCT_H

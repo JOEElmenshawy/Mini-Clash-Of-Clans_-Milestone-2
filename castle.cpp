@@ -10,7 +10,7 @@ extern Game *g;
 Castle::Castle() {
 
     health=30;
-
+costToPass=7000;
 
     name = "Castle";
 
