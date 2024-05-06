@@ -6,6 +6,7 @@
 #include<QAudioOutput>
 extern Game *g;
 extern int* hard;
+extern int Volume;
 WonLevel::WonLevel(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::WonLevel)
@@ -21,7 +22,7 @@ WonLevel::WonLevel(QWidget *parent)
 
     QAudioOutput *audio = new QAudioOutput;
     Q->setAudioOutput(audio);
-    audio->setVolume(50);
+    audio->setVolume(Volume);
     Q->play();
 }
 

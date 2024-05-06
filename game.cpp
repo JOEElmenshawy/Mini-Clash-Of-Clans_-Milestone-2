@@ -22,6 +22,8 @@
 #include "wongame.h"
 #include "healthmarker.h"
 extern MainWindow *w;
+extern QString Map;
+extern int Volume;
 Game::Game(int h)
 
 {
@@ -31,11 +33,11 @@ Game::Game(int h)
     extradamage=0;
     powerup=false;
     Q = new QMediaPlayer;
-    Q ->setSource(QUrl("qrc:/new/Sound/Sound/background.mp3"));
+    Q ->setSource(QUrl("qrc:/new/Sound/Sound/FinalBackgroundMusic.mp3"));
 
     QAudioOutput *audio = new QAudioOutput;
     Q->setAudioOutput(audio);
-    audio->setVolume(20);
+    audio->setVolume(Volume);
     Q->play();
     Iterator=0;
     NumberOfFences=0;
@@ -52,7 +54,7 @@ Game::Game(int h)
     view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->setScene(scene);
-    QFile file(":/new/board/clandesign.txt");
+    QFile file(Map);
     file.open(QIODevice::ReadOnly);
     int boarddata[10][15];
     QTextStream stream(&file);
@@ -115,7 +117,7 @@ Game::Game(int h)
 // createEnemy();
 Enemytimer = new QTimer();
 QObject::connect(Enemytimer,SIGNAL(timeout()),this,SLOT(createEnemy()));
-Enemytimer->start(1000);
+//Enemytimer->start(1000);
 CitizenTimer = new QTimer();
 QObject::connect(  CitizenTimer,SIGNAL(timeout()),this,SLOT(createCitizens()));
 CitizenTimer->start(1);
@@ -237,7 +239,7 @@ void Game::boostshootpower()
 
          QAudioOutput *audio2 = new QAudioOutput;
          Z->setAudioOutput(audio2);
-         audio2->setVolume(20);
+         audio2->setVolume(Volume);
          Q->stop();
          Z->play();
          Q->play();

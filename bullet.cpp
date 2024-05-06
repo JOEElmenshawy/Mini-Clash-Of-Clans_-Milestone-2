@@ -10,6 +10,7 @@
 #include<QMediaPlayer>
 #include<QAudioOutput>
 extern Game *g;
+extern int Volume;
 bullet::bullet(int x, int y,int d):targetX(x),targetY(y),damage(d) {
     this->setPixmap(QPixmap (":/new/images/images/cannonball_PNG10.png").scaled(15,15));
     QMediaPlayer *Q = new QMediaPlayer;
@@ -17,7 +18,7 @@ bullet::bullet(int x, int y,int d):targetX(x),targetY(y),damage(d) {
 
     QAudioOutput *audio = new QAudioOutput;
     Q->setAudioOutput(audio);
-    audio->setVolume(50);
+    audio->setVolume(Volume);
     Q->play();
     QTimer * timer= new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(move()));
@@ -52,7 +53,7 @@ void bullet::move()
 
                 QAudioOutput *audio = new QAudioOutput;
                 Q->setAudioOutput(audio);
-                audio->setVolume(50);
+                audio->setVolume(Volume);
                 Q->play();
             }
         }

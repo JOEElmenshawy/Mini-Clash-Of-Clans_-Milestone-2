@@ -4,6 +4,7 @@
 #include<QMediaPlayer>
 #include<QAudioOutput>
 extern Game *g;
+extern int Volume;
 wongame::wongame(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::wongame)
@@ -17,7 +18,7 @@ wongame::wongame(QWidget *parent) :
 
     QAudioOutput *audio = new QAudioOutput;
     Q->setAudioOutput(audio);
-    audio->setVolume(50);
+    audio->setVolume(Volume);
     Q->play();
 
 }

@@ -3,6 +3,7 @@
 #include <QPushButton>
 #include <mainwindow.h>
 extern Game *g;
+extern int Volume;
 LostWindow::LostWindow(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::LostWindow)
@@ -16,7 +17,7 @@ LostWindow::LostWindow(QWidget *parent)
 
     QAudioOutput *audio = new QAudioOutput;
     Q->setAudioOutput(audio);
-    audio->setVolume(50);
+    audio->setVolume(Volume);
     Q->play();
 
 

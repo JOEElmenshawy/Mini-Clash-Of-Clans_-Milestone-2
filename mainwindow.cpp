@@ -13,6 +13,7 @@
 #include "enemy.h"
 #include "defense.h"
 #include "fence.h"
+#include"optionswindow.h"
 extern Game *g;
 extern int* hard;
 MainWindow::MainWindow(QWidget *parent)
@@ -49,5 +50,14 @@ void MainWindow::on_pushButton_3_clicked()
     delete g;
     this->hide();
     delete this;
+}
+
+
+void MainWindow::on_OptionsButton_clicked()
+{
+    OptionsWindow* O= new OptionsWindow();
+    this->hide();
+    O->show();
+
 }
 

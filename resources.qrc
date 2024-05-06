@@ -1,8 +1,4 @@
 <RCC>
-    <qresource prefix="/new/board">
-        <file>clandesign.txt</file>
-        <file>images/Latestl1.jpg</file>
-    </qresource>
     <qresource prefix="/new/images">
         <file>images/background.png</file>
         <file>images/caslte.png</file>
@@ -18,9 +14,13 @@
         <file>images/NextLevel.png</file>
         <file>images/You win.jpg</file>
         <file>images/health maker.png</file>
+        <file>images/Map1.png.jpg</file>
+        <file>images/Map2.png.jpg</file>
+        <file>images/MAP3.png.jpg</file>
+        <file>images/OptionsBackground.jpg</file>
+        <file>images/Greyphoto.jpg</file>
     </qresource>
     <qresource prefix="/new/Sound">
-        <file>Sound/background.mp3</file>
         <file>Sound/bulletshot.wav</file>
         <file>Sound/dead.mp3</file>
         <file>Sound/HealthMarkersActivated.mp3</file>
@@ -28,6 +28,11 @@
         <file>Sound/WINGAME.mp3</file>
         <file>Sound/HealthMarkersDeactivation.mp3</file>
         <file>Sound/GameOver.wav</file>
+        <file>Sound/FinalBackgroundMusic.mp3</file>
     </qresource>
-    <qresource prefix="/new/prefix1"/>
+    <qresource prefix="/ClanMaps">
+        <file>Clan Maps/Map1.txt</file>
+        <file>Clan Maps/Map2.txt</file>
+        <file>Clan Maps/Map3.txt</file>
+    </qresource>
 </RCC>

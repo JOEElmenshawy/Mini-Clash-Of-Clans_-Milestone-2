@@ -15,7 +15,9 @@
 #include <unordered_map>
 #include <algorithm>
 #include <limits>
+#include<queue>
 extern Game *g;
+extern int Volume;
 Enemy::Enemy(int d)
 {
     damage=d;
@@ -121,7 +123,7 @@ void Enemy::DecreaseHealth(int d){
 
     QAudioOutput *audio = new QAudioOutput;
     Q->setAudioOutput(audio);
-    audio->setVolume(50);
+    audio->setVolume(Volume);
     Q->play();
     if(health<=0)
     {
@@ -212,7 +214,7 @@ std::vector<std::vector<node *> > Enemy::creatNodes(std::vector<std::vector<Obje
 }
 const double INF = 9999999;
 using namespace std;
-std::vector<node *> Enemy::dijkstra(node *start, node *end)
+/*std::vector<node *> Enemy::dijkstra(node *start, node *end)
 { std::vector<node*> path;
     std::unordered_map<node*, double> dist;
     std::unordered_map<node*, node*> prev;
@@ -253,5 +255,53 @@ std::vector<node *> Enemy::dijkstra(node *start, node *end)
         current = prev[current];
     }
 
+    return path;
+}
+*/
+std::vector<node*> Enemy::dijkstra(node* start, node* end) {
+    std::vector<node*> path;
+    std::unordered_map<node*, double> dist;
+    std::unordered_map<node*, node*> prev;
+    std::priority_queue<std::pair<double, node*>, std::vector<std::pair<double, node*>>, std::greater<std::pair<double, node*>>> pq;
+
+    for (const auto& row : nodes) {
+        for (const auto& node_ptr : row) {
+            dist[node_ptr] = std::numeric_limits<double>::infinity();
+            prev[node_ptr] = nullptr;
+        }
+    }
+
+    dist[start] = 0;
+    pq.push({0, start});
+
+    while (!pq.empty()) {
+        node* u = pq.top().second;
+        pq.pop();
+
+        if (u == end) {
+            break;
+        }
+
+        for (const auto& connection : u->connections) {
+            node* v = connection.second.first;
+            double weight = connection.second.second;
+
+            double alt = dist[u] + weight;
+
+            if (alt < dist[v]) {
+                dist[v] = alt;
+                prev[v] = u;
+                pq.push({alt, v});
+            }
+        }
+    }
+
+    node* current = end;
+    while (current != nullptr) {
+        path.push_back(current);
+        current = prev[current];
+    }
+
+    std::reverse(path.begin(), path.end());
     return path;
 }

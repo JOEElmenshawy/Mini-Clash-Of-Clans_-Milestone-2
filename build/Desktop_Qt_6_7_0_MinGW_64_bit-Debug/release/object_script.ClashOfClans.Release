@@ -12,6 +12,7 @@ release/main.o
 release/mainwindow.o
 release/node.o
 release/objectstruct.o
+release/optionswindow.o
 release/wongame.o
 release/wonlevel.o
 release/qrc_resources.o
@@ -23,5 +24,6 @@ release/moc_game.o
 release/moc_healthmarker.o
 release/moc_lostwindow.o
 release/moc_mainwindow.o
+release/moc_optionswindow.o
 release/moc_wongame.o
 release/moc_wonlevel.o

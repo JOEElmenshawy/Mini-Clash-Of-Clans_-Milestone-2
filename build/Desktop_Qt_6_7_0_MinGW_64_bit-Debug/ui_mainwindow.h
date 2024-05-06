@@ -27,6 +27,7 @@ public:
     QLabel *imagelabel;
     QPushButton *pushButton;
     QPushButton *pushButton_3;
+    QPushButton *OptionsButton;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -60,6 +61,15 @@ public:
         palette1.setBrush(QPalette::Disabled, QPalette::Button, brush);
         pushButton_3->setPalette(palette1);
         pushButton_3->setStyleSheet(QString::fromUtf8("font:12pt \"Times New Roman\";"));
+        OptionsButton = new QPushButton(centralwidget);
+        OptionsButton->setObjectName("OptionsButton");
+        OptionsButton->setGeometry(QRect(550, 650, 111, 51));
+        QPalette palette2;
+        palette2.setBrush(QPalette::Active, QPalette::Button, brush);
+        palette2.setBrush(QPalette::Inactive, QPalette::Button, brush);
+        palette2.setBrush(QPalette::Disabled, QPalette::Button, brush);
+        OptionsButton->setPalette(palette2);
+        OptionsButton->setStyleSheet(QString::fromUtf8("font:12pt \"Times New Roman\";"));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
@@ -80,6 +90,7 @@ public:
         imagelabel->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
         pushButton->setText(QCoreApplication::translate("MainWindow", "Play", nullptr));
         pushButton_3->setText(QCoreApplication::translate("MainWindow", "Exit", nullptr));
+        OptionsButton->setText(QCoreApplication::translate("MainWindow", "Options", nullptr));
     } // retranslateUi
 
 };

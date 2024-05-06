@@ -24,6 +24,7 @@ SOURCES += \
     mainwindow.cpp \
     node.cpp \
     objectstruct.cpp \
+    optionswindow.cpp \
     wongame.cpp \
     wonlevel.cpp
 
@@ -41,12 +42,14 @@ HEADERS += \
     mainwindow.h \
     node.h \
     objectstruct.h \
+    optionswindow.h \
     wongame.h \
     wonlevel.h
 
 FORMS += \
     lostwindow.ui \
     mainwindow.ui \
+    optionswindow.ui \
     wongame.ui \
     wonlevel.ui
 

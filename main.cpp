@@ -11,15 +11,17 @@
 Game *g;
 MainWindow *w;
 int *hard;
+QString Map;
+int Volume;
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     w= new MainWindow;
     QGraphicsView view;
+    Map=":/ClanMaps/Clan Maps/Map1.txt";
 
 
-
-
+    Volume =50;
 
     view.setWindowTitle("Game Project");
     QGraphicsScene scene;
