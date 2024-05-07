@@ -6,7 +6,7 @@ class node
 {
 public:
     node(ObjectStruct* _object);
-    ObjectStruct object;
+    ObjectStruct* object;
     node* parent;
     int health;
     int x;

@@ -17,11 +17,11 @@ public:
     void printNodes() const;
     void printConnections() const ;
     std::vector<node*> dijkstra(node* start, node* end);
-    void stepBack();
     ~Enemy();
 private:
     int enemyRow;
     int enemyCol;
+    std::vector<node*> path;
     int damage;
     bool continuemove;
     int health;
@@ -30,7 +30,7 @@ private:
     int itr;
     std::vector<std::vector<node*>> nodes;
      node* currNode;
-    float dX, dY, Delta;
+    float dX, dY;
     float distance;
 public slots:
     void move();

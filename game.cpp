@@ -40,7 +40,6 @@ Game::Game(int h)
     audio->setVolume(Volume);
     Q->play();
     Iterator=0;
-    NumberOfFences=0;
     view= new QGraphicsView;
     view->setWindowTitle("Game Project");
     scene=new QGraphicsScene;
@@ -63,11 +62,8 @@ Game::Game(int h)
         for(int j=0;j<15;j++){
             stream>> temp;
             boarddata[i][j] = temp.toInt();
-            if (temp.toInt()==3)
-                NumberOfFences++;
         }
     }
-    fence=new Fence*[NumberOfFences];
     QPixmap castlephoto (":/new/images/images/caslte.png");
     castlephoto=castlephoto.scaledToWidth(75);
     castlephoto=castlephoto.scaledToHeight(75);
@@ -117,7 +113,7 @@ Game::Game(int h)
 // createEnemy();
 Enemytimer = new QTimer();
 QObject::connect(Enemytimer,SIGNAL(timeout()),this,SLOT(createEnemy()));
-//Enemytimer->start(1000);
+Enemytimer->start(5000);
 CitizenTimer = new QTimer();
 QObject::connect(  CitizenTimer,SIGNAL(timeout()),this,SLOT(createCitizens()));
 CitizenTimer->start(1);
@@ -128,7 +124,7 @@ wintimer = new QTimer(this);
 
 // Set a single-shot timer for 5 minutes
 wintimer->setSingleShot(true);
-wintimer->start(1 * 40* 1000); // 60 seconds in milliseconds
+wintimer->start(1 * 80* 1000); // 60 seconds in milliseconds
 
 // Connect a slot to the timeout() signal of the timer
 connect(wintimer, &QTimer::timeout, this, [=]()
@@ -158,6 +154,7 @@ void Game::createCitizens()
 {
     if(Iterator<5)
     {Citizens* c = new Citizens;
+        c->setPos((castle->castleColumn*75-60)+rand()%100,(castle->castleRow*75-60)+rand()%100);
     scene->addItem(c);}
     Iterator++;
 }

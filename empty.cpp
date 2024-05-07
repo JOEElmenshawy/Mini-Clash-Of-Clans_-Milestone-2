@@ -7,6 +7,6 @@ empty::empty()
     grassphoto=grassphoto.scaledToWidth(75);
     grassphoto=grassphoto.scaledToHeight(75);
     setPixmap(grassphoto);
-    name = "";
+    name = "emptyland";
 
 }

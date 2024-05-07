@@ -8,7 +8,6 @@ Citizens::Citizens() {
 
     setPixmap(QPixmap(":/new/images/images/citizenWorker.png").scaled(40, 40));
 
-    this->setPos(400+rand()%250 ,330 + rand()%250 );
     QTimer * timer = new QTimer();
     QObject::connect(timer,SIGNAL(timeout()),this,SLOT(move()));
     timer->start(100);

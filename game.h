@@ -43,7 +43,6 @@ QGraphicsScene * scene;
     Castle* castle;
     Fence** fence;
     Defense* defense;
-    int NumberOfFences;
     QTimer* wintimer;
     QTimer* Enemytimer;
     QTimer*CitizenTimer;

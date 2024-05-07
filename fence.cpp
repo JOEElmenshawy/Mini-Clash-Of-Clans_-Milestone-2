@@ -3,7 +3,7 @@
 extern Game *g;
 Fence::Fence() {
     health = 10;
-    costToPass=110;
+    costToPass=60;
     QPixmap fencephoto (":/new/images/images/fence.png");
     fencephoto=fencephoto.scaledToWidth(75);
     fencephoto=fencephoto.scaledToHeight(75);
@@ -13,7 +13,7 @@ Fence::Fence() {
 
 void Fence::DecreaseHealth(int d){
     health-=d;
-    costToPass-=10*d;
+    costToPass-=5*d;
     if(costToPass<10)
         costToPass=10;
     Die();
@@ -22,7 +22,7 @@ void Fence::DecreaseHealth(int d){
 void Fence::Die(){
     if(health<=0){
         scene()->removeItem(this);
-        delete this;
+
     }
 
 }
