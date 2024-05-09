@@ -249,3 +249,5 @@ Castle *Game::getCastle()
 {
     return castle;
 }
+
+

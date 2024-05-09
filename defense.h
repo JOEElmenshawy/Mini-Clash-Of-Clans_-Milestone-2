@@ -11,11 +11,13 @@ class Defense:public QObject , public ObjectStruct
 {
 public:
     Defense();
-
-
-
-private:
     int health;
+    std::vector <QPixmap> rotatingPictures;
+    int frame;
+    QPoint CurserPoint;
+    void Animate();
+    float getRatio();
+    float Ratio;
 };
 
 #endif // DEFENSE_H

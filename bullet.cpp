@@ -27,8 +27,8 @@ bullet::bullet(int x, int y,int d):targetX(x),targetY(y),damage(d) {
 
 double bullet::CalculatePos()
 {
-    double dx2 = targetX - 75*5;
-    double dy2 = targetY - 75*4;
+    double dx2 = targetX - g->cannonx;
+    double dy2 = targetY - g->cannony;
     double theta2 = qAtan2(dy2, dx2) * 180 / M_PI;
     return theta2;
 }
@@ -77,6 +77,8 @@ void bullet::move()
         scene()->removeItem(this);
             delete this;
     }
+    else
+    {
     int STEP =10;
 
      // Angle in degrees
@@ -88,5 +90,6 @@ void bullet::move()
     double dy= STEP*qSin(qDegreesToRadians(theta));
     double dx= STEP*qCos(qDegreesToRadians(theta));
     setPos(x()+dx,y()+dy);
+    }
 
 }
