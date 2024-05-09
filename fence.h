@@ -10,6 +10,7 @@ public:
     Fence();
     void DecreaseHealth(int d);
     void Die();
+    void increaseHealth();
 
 private:
     int health;

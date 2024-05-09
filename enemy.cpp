@@ -57,14 +57,15 @@ Enemy::Enemy(int d)
   //  MoveTimer->start(200);
      nodes = creatNodes(g->objects);
     //printNodes();
-     printConnections();
+  //   printConnections();
     node* start = nodes[enemyRow][enemyCol];
      node* end = nodes[g->getCastle()->castleRow][g->getCastle()->castleColumn];
      path = dijkstra(start, end);
-    for (auto it = path.rbegin(); it != path.rend(); it++) {
-         qDebug() << (*it)->object->id << ": ";
-        qDebug()  << "(" << (*it)->object->x() << ", " << (*it)->object->y() << ")" << "\n";
-    }
+
+    // for (auto it = path.rbegin(); it != path.rend(); it++) {
+    //      qDebug() << (*it)->object->id << ": ";
+    //     qDebug()  << "(" << (*it)->object->x() << ", " << (*it)->object->y() << ")" << "\n";
+    // }
         qDebug()  << "\n";
     itr = path.size()-2;
     currNode = path[itr];
@@ -158,7 +159,9 @@ void Enemy::move()
         if (Fence* fenceItem = dynamic_cast<Fence*>(colliding_items[i])) {
             if(!passFence){
             fenceItem->DecreaseHealth(damage);
-                continuemove=false;}
+                continuemove=false;
+         //   Die();
+            }
         }
         else if(Castle* castleItem = dynamic_cast<Castle*>(colliding_items[i])){
             castleItem->DecreaseHealth(damage);
@@ -174,7 +177,13 @@ void Enemy::move()
 
 Enemy::~Enemy()
 {
-
+    qDebug()<<"enemy destructed";
+    delete MoveTimer;
+    for (int i = 0; i < nodes.size(); i++) {
+        for (int j = 0; j < nodes[i].size(); j++) {
+            delete nodes[i][j];
+        }
+    }
 }
 std::vector<std::vector<node *> > Enemy::creatNodes(std::vector<std::vector<ObjectStruct *> > &objects)
 {
@@ -257,11 +266,11 @@ std::vector<node*> Enemy::dijkstra(node* start, node* end) {
     {
         if(iterator.second == std::numeric_limits<double>::infinity())
         {
-            qDebug() << iterator.first->id << " has infinite distance";
+          //  qDebug() << iterator.first->id << " has infinite distance";
         }
         else
         {
-            qDebug() << iterator.first->id << " total dist=" << iterator.second;
+          //  qDebug() << iterator.first->id << " total dist=" << iterator.second;
         }
     }
 

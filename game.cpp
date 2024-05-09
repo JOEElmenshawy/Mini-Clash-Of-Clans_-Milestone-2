@@ -170,9 +170,9 @@ void Game::mousePressEvent(QMouseEvent *event)
     if(powerup)
     k+=10*(6-hardness)*0.1;
     bullet* B = new bullet(event->pos().x(), event->pos().y(),extradamage+k+10*(6-hardness));
-    B->setPos(cannonx,cannony);
+    B->setPos(cannonx+75/2,cannony+75/2);
     scene->addItem(B);
-    qDebug() << event->pos().x();
+  //  qDebug() << event->pos().x();
 
 }
 

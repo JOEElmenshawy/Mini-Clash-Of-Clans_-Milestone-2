@@ -17,9 +17,14 @@ public slots:
 
     void move();
 private:
-    int sign;
+    bool continuemove;
+    bool shouldlookForFence;
+    bool citizendied;
     int citizenRow;
     int citizenCol;
+    int targetFenceRow;
+    int targetFenceCol;
+    void lookFence();
     std::vector<node*> path;
     QTimer* MoveTimer;
     int itr;

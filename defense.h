@@ -13,11 +13,10 @@ public:
     Defense();
     int health;
     std::vector <QPixmap> rotatingPictures;
-    int frame;
     QPoint CurserPoint;
-    void Animate();
-    float getRatio();
-    float Ratio;
+    void LoadPhotos();
+    double CalculateAngle();
+
 };
 
 #endif // DEFENSE_H
