@@ -169,58 +169,57 @@
      <string>TextLabel</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="applyButton">
+   <widget class="QGroupBox" name="groupBox_2">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>290</y>
-      <width>141</width>
-      <height>41</height>
+      <x>30</x>
+      <y>240</y>
+      <width>991</width>
+      <height>80</height>
      </rect>
     </property>
-    <property name="palette">
-     <palette>
-      <active>
-       <colorrole role="Button">
-        <brush brushstyle="SolidPattern">
-         <color alpha="255">
-          <red>0</red>
-          <green>255</green>
-          <blue>255</blue>
-         </color>
-        </brush>
-       </colorrole>
-      </active>
-      <inactive>
-       <colorrole role="Button">
-        <brush brushstyle="SolidPattern">
-         <color alpha="255">
-          <red>0</red>
-          <green>255</green>
-          <blue>255</blue>
-         </color>
-        </brush>
-       </colorrole>
-      </inactive>
-      <disabled>
-       <colorrole role="Button">
-        <brush brushstyle="SolidPattern">
-         <color alpha="255">
-          <red>0</red>
-          <green>255</green>
-          <blue>255</blue>
-         </color>
-        </brush>
-       </colorrole>
-      </disabled>
-     </palette>
+    <property name="title">
+     <string>Biome Selection</string>
     </property>
-    <property name="styleSheet">
-     <string notr="true">font: 12pt &quot;Times New Roman&quot;;</string>
-    </property>
-    <property name="text">
-     <string>Apply</string>
-    </property>
+    <widget class="QRadioButton" name="SnowRadio">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>30</y>
+       <width>110</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Snowy</string>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="desertRadio">
+     <property name="geometry">
+      <rect>
+       <x>390</x>
+       <y>30</y>
+       <width>110</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Desert</string>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="GrassRadio">
+     <property name="geometry">
+      <rect>
+       <x>750</x>
+       <y>30</y>
+       <width>110</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Grass</string>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QSlider" name="VolumeSlider">
@@ -253,6 +252,59 @@
    </property>
    <property name="text">
     <string>Volume</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="applyButton">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>660</y>
+     <width>141</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="palette">
+    <palette>
+     <active>
+      <colorrole role="Button">
+       <brush brushstyle="SolidPattern">
+        <color alpha="255">
+         <red>0</red>
+         <green>255</green>
+         <blue>255</blue>
+        </color>
+       </brush>
+      </colorrole>
+     </active>
+     <inactive>
+      <colorrole role="Button">
+       <brush brushstyle="SolidPattern">
+        <color alpha="255">
+         <red>0</red>
+         <green>255</green>
+         <blue>255</blue>
+        </color>
+       </brush>
+      </colorrole>
+     </inactive>
+     <disabled>
+      <colorrole role="Button">
+       <brush brushstyle="SolidPattern">
+        <color alpha="255">
+         <red>0</red>
+         <green>255</green>
+         <blue>255</blue>
+        </color>
+       </brush>
+      </colorrole>
+     </disabled>
+    </palette>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 12pt &quot;Times New Roman&quot;;</string>
+   </property>
+   <property name="text">
+    <string>Apply</string>
    </property>
   </widget>
  </widget>

@@ -1,12 +1,12 @@
 #include "empty.h"
-
+extern QString land;
 empty::empty()
 {
     costToPass=10;
-    QPixmap grassphoto (":/new/images/images/grass.png");
-    grassphoto=grassphoto.scaledToWidth(75);
-    grassphoto=grassphoto.scaledToHeight(75);
-    setPixmap(grassphoto);
+    QPixmap landphoto (land);
+    landphoto=landphoto.scaledToWidth(75);
+    landphoto=landphoto.scaledToHeight(75);
+    setPixmap(landphoto);
     name = "emptyland";
 
 }

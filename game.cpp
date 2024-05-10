@@ -24,6 +24,8 @@
 extern MainWindow *w;
 extern QString Map;
 extern int Volume;
+extern QString CastlePath;
+extern QString BackgroundPath;
 Game::Game(int h)
 
 {
@@ -39,6 +41,7 @@ Game::Game(int h)
     QAudioOutput *audio = new QAudioOutput;
     Q->setAudioOutput(audio);
     audio->setVolume(Volume);
+
     Q->play();
     Iterator=0;
     view= new QGraphicsView;
@@ -47,7 +50,7 @@ Game::Game(int h)
     scene->setSceneRect(0,0,1125,750);
 
     view->setFixedSize(1125,750);
-    view->setBackgroundBrush(QBrush(QImage(":/new/images/images/background.png")));
+    view->setBackgroundBrush(QBrush(QImage(BackgroundPath)));
     view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->setScene(scene);
@@ -79,7 +82,7 @@ Game::Game(int h)
 
 
 
-    QPixmap castlephoto (":/new/images/images/caslte.png");
+    QPixmap castlephoto (CastlePath);
     castlephoto=castlephoto.scaledToWidth(75);
     castlephoto=castlephoto.scaledToHeight(75);
     castle = new Castle();

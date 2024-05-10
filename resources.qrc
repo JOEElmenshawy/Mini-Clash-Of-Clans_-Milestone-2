@@ -19,6 +19,15 @@
         <file>images/MAP3.png.jpg</file>
         <file>images/OptionsBackground.jpg</file>
         <file>images/Greyphoto.jpg</file>
+        <file>images/dessertTown_Hall.png</file>
+        <file>images/ICYTown_Hall.png</file>
+        <file>images/Town_Hall.png</file>
+        <file>images/snowemptyland.jpg</file>
+        <file>images/snowybackground.png</file>
+        <file>images/dessertbackground.png</file>
+        <file>images/sandemptyland.jpg</file>
+        <file>images/dessertfence.png</file>
+        <file>images/icefence.png</file>
     </qresource>
     <qresource prefix="/new/Sound">
         <file>Sound/bulletshot.wav</file>

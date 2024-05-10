@@ -1,11 +1,12 @@
 #include "fence.h"
 #include"game.h"
 extern Game *g;
+extern QString fence;
 Fence::Fence() {
     dontincrease=false;
     health = 50;
     costToPass=60;
-    QPixmap fencephoto (":/new/images/images/fence.png");
+    QPixmap fencephoto (fence);
     fencephoto=fencephoto.scaledToWidth(75);
     fencephoto=fencephoto.scaledToHeight(75);
     setPixmap(fencephoto);

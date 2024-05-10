@@ -13,15 +13,22 @@ MainWindow *w;
 int *hard;
 QString Map;
 int Volume;
+QString land;
+QString CastlePath;
+QString fence;
+QString BackgroundPath;
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     w= new MainWindow;
     QGraphicsView view;
-    Map=":/ClanMaps/Clan Maps/Map1.txt";
+Map=":/ClanMaps/Clan Maps/Map1.txt";
+BackgroundPath=":/new/images/images/snowybackground.png";
+Volume = 50;
+CastlePath = ":/new/images/images/ICYTown_Hall.png";
+land =":/new/images/images/snowemptyland.jpg";
+fence=":/new/images/images/icefence.png";
 
-
-    Volume =50;
 
     view.setWindowTitle("Game Project");
     QGraphicsScene scene;

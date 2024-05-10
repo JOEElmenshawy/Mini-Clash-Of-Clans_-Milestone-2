@@ -5,6 +5,10 @@
 #include<QSlider>
 extern int Volume;
 extern QString Map;
+extern QString land;
+extern QString CastlePath;
+extern QString fence;
+extern QString BackgroundPath;
 OptionsWindow::OptionsWindow(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::OptionsWindow)
@@ -55,6 +59,28 @@ void OptionsWindow::on_applyButton_clicked()
     else if(ui->Map3_Radio->isChecked())
     {
         Map=":/ClanMaps/Clan Maps/Map3.txt";
+    }
+    if(ui->GrassRadio->isChecked())
+    {
+        land = ":/new/images/images/grass.png";
+        CastlePath=":/new/images/images/Town_Hall.png";
+            fence=":/new/images/images/fence.png";
+        BackgroundPath=":/new/images/images/background.png";
+    }
+    else if (ui->desertRadio->isChecked())
+    {
+        land = ":/new/images/images/sandemptyland.jpg";
+        CastlePath=":/new/images/images/dessertTown_Hall.png";
+        fence=":/new/images/images/dessertfence.png";
+        BackgroundPath=":/new/images/images/dessertbackground.png";
+    }
+    else if (ui->SnowRadio->isChecked())
+    {
+
+        land =":/new/images/images/snowemptyland.jpg";
+        CastlePath =":/new/images/images/ICYTown_Hall.png";
+        fence=":/new/images/images/icefence.png";
+        BackgroundPath=":/new/images/images/snowybackground.png";
     }
 }
 
