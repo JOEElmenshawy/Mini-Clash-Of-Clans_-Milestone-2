@@ -27,11 +27,12 @@ extern int Volume;
 Game::Game(int h)
 
 {
+
     hardness=h;
     qDebug()<<hardness;
     enemydestroyed=0;
     extradamage=0;
-    powerup=false;
+    powerup=0;
     Q = new QMediaPlayer;
     Q ->setSource(QUrl("qrc:/new/Sound/Sound/FinalBackgroundMusic.mp3"));
 
@@ -55,6 +56,7 @@ Game::Game(int h)
     view->setScene(scene);
     QFile file(Map);
     file.open(QIODevice::ReadOnly);
+  //  std::vector<std::vector<int>>boarddata;
     int boarddata[10][15];
     QTextStream stream(&file);
     QString temp;
@@ -109,11 +111,11 @@ Game::Game(int h)
     }
 
     view->viewport()->installEventFilter(this);
-
+  nodes = creatNodes(objects);
 // createEnemy();
 Enemytimer = new QTimer();
 QObject::connect(Enemytimer,SIGNAL(timeout()),this,SLOT(createEnemy()));
-Enemytimer->start(5000);
+Enemytimer->start((9-hardness)*1000+2000);
 CitizenTimer = new QTimer();
 QObject::connect(  CitizenTimer,SIGNAL(timeout()),this,SLOT(createCitizens()));
 CitizenTimer->start(1);
@@ -124,7 +126,7 @@ wintimer = new QTimer(this);
 
 // Set a single-shot timer for 5 minutes
 wintimer->setSingleShot(true);
-wintimer->start(1 * 80* 1000); // 60 seconds in milliseconds
+wintimer->start(1 * 200* 1000); // 60 seconds in milliseconds
 
 // Connect a slot to the timeout() signal of the timer
 connect(wintimer, &QTimer::timeout, this, [=]()
@@ -146,7 +148,7 @@ connect(wintimer, &QTimer::timeout, this, [=]()
 
 void Game::createEnemy()
 {
-    Enemy* e= new Enemy(hardness);
+    Enemy* e= new Enemy(hardness+1);
     scene->addItem(e);
     qDebug()<<"create enemy called";
 }
@@ -166,10 +168,13 @@ void Game::createMarkers()
 }
 void Game::mousePressEvent(QMouseEvent *event)
 {
-    int k=0;
-    if(powerup)
-    k+=10*(6-hardness)*0.1;
-    bullet* B = new bullet(event->pos().x(), event->pos().y(),extradamage+k+10*(6-hardness));
+increasedamageevery20=0;
+    for(int i=0;i<powerup;i++)
+    {
+         increasedamageevery20+= 10*(6-hardness)*0.1;
+    }
+        qDebug()<<"powered up"<<increasedamageevery20;
+    bullet* B = new bullet(event->pos().x(), event->pos().y(),extradamage+increasedamageevery20+10*(6-hardness));
     B->setPos(cannonx+75/2,cannony+75/2);
     scene->addItem(B);
   //  qDebug() << event->pos().x();
@@ -201,14 +206,71 @@ void Game::gameOver()
    qDebug()<<" game over";
    delete this;
 }
+void Game::printNodes() const {
+    // Iterate over each row of nodes
+    for (const auto& row : nodes) {
+        // Iterate over each node in the row
+        for (const auto& node_ptr : row) {
+            // Print the coordinates of the node
+            qDebug() << "Node: (" << node_ptr->object->x() << ", " << node_ptr->object->y() << ")";
+        }
+    }
+}
+void Game::printConnections() const {
+    // Iterate over each row of nodes
+    for (const auto& row : nodes) {
+        // Iterate over each node in the row
+        for (const auto& node_ptr : row) {
+            // Print connections of the current node
+            qDebug() << "Connections of Node (" << node_ptr->object->x() << ", " << node_ptr->object->y() << "):";
 
+            // Iterate over each connection of the current node
+            for (const auto& connection : node_ptr->connections) {
+                // Print the coordinates of the connected node
+                qDebug() << "  Connected Node: (" << connection.second.first->object->x()/75 << ", " << connection.second.first->object->y()/75 << ")"<<"cost:"<<connection.second.second;
+            }
+        }
+    }
+}
 Game::~Game()
 {
     Q->stop();
     delete Q;
 }
 
+std::vector<std::vector<node *> > Game::creatNodes(std::vector<std::vector<ObjectStruct *> > &objects)
+{
+    int rows = objects.size();
+    int cols = objects[0].size();
 
+    std::vector<std::vector<node*>> nodes(rows, std::vector<node*>(cols));
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            nodes[i][j] = new node(objects[i][j]);
+        }
+    }
+
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            if (i > 0) nodes[i][j]->addConnection(nodes[i-1][j],castle->x(),castle->y()); // upper neighbour
+            if (i < rows - 1) nodes[i][j]->addConnection(nodes[i+1][j],castle->x(),castle->y()); // Down neighbour
+            if (j > 0) nodes[i][j]->addConnection(nodes[i][j-1],castle->x(),castle->y()); // left neighbour
+            if (j < cols - 1) nodes[i][j]->addConnection(nodes[i][j+1],castle->x(),castle->y()); // right neighbour
+
+            // Diagonal connections
+            if (i > 0 && j > 0)
+                nodes[i][j]->addConnection(nodes[i-1][j-1],castle->x(),castle->y()); // top left neighbour
+            if (i > 0 && j < cols - 1)
+                nodes[i][j]->addConnection(nodes[i-1][j+1],castle->x(),castle->y()); // top right neighbour
+            if (i < rows - 1 && j > 0)
+                nodes[i][j]->addConnection(nodes[i+1][j-1],castle->x(),castle->y()); // bottom left neighbour
+            if (i < rows - 1 && j < cols - 1)
+                nodes[i][j]->addConnection(nodes[i+1][j+1],castle->x(),castle->y()); // bottom right neighbour
+        }
+    }
+
+    return nodes;
+}
 
 
 void Game::showview()
@@ -225,7 +287,7 @@ void Game::boostshootpower()
 
     // Set a single-shot timer
     boostdamagetimer->setSingleShot(true);
-     boostdamagetimer->start(1 * 5* 1000);
+     boostdamagetimer->start(1 * 30* 1000);
 
     // Connect a slot to the timeout() signal of the timer
     connect( boostdamagetimer, &QTimer::timeout, this, [=]()

@@ -12,7 +12,6 @@ class Citizens:public QObject, public QGraphicsPixmapItem
 public:
     Citizens();
       std::vector<node*> dijkstra(node* start, node* end);
-      std::vector<std::vector<node*>> creatNodes(std::vector<std::vector< ObjectStruct*>>& objects);
 public slots:
 
     void move();
@@ -23,12 +22,12 @@ private:
     int citizenRow;
     int citizenCol;
     int targetFenceRow;
+    int animationiterator;
     int targetFenceCol;
     void lookFence();
     std::vector<node*> path;
     QTimer* MoveTimer;
     int itr;
-    std::vector<std::vector<node*>> nodes;
     node* currNode;
     float dX, dY;
     float distance;

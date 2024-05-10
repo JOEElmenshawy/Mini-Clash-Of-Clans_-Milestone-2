@@ -13,7 +13,7 @@ public:
     int y;
     std::string id;
     std::map<std::string, std::pair<node*, int>> connections; // Store both the node and the weight
-    void addConnection(node* node1);
+    void addConnection(node* node1,int xofcastle,int yofcastle);
     std::pair<node*, int> getNeighbor(std::string);
 
 

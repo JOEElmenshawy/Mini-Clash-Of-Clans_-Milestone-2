@@ -13,9 +13,8 @@ public:
     Enemy(int d);
     void Die();
     void DecreaseHealth(int d);
-    std::vector<std::vector<node*>> creatNodes(std::vector<std::vector< ObjectStruct*>>& objects);
-    void printNodes() const;
-    void printConnections() const ;
+
+
     std::vector<node*> dijkstra(node* start, node* end);
     ~Enemy();
 private:
@@ -28,7 +27,7 @@ private:
     bool enemydied;
     QTimer* MoveTimer;
     int itr;
-    std::vector<std::vector<node*>> nodes;
+
      node* currNode;
     float dX, dY;
     float distance;

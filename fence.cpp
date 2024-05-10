@@ -2,8 +2,8 @@
 #include"game.h"
 extern Game *g;
 Fence::Fence() {
-
-    health = 10;
+    dontincrease=false;
+    health = 50;
     costToPass=60;
     QPixmap fencephoto (":/new/images/images/fence.png");
     fencephoto=fencephoto.scaledToWidth(75);
@@ -13,29 +13,31 @@ Fence::Fence() {
 }
 
 void Fence::DecreaseHealth(int d){
+    dontincrease=true;
     health-=d;
-    costToPass-=5*d;
+    costToPass-=d;
     if(health<0)
         health=0;
     if(costToPass<10)
         costToPass=10;
+    if(health==0)
     Die();
+    dontincrease=false;
 }
 
 void Fence::Die(){
-    if(health<=0){
+    qDebug()<<"fence died";
+        name="emptyland";
         scene()->removeItem(this);
-
-    }
-
 }
 
 void Fence::increaseHealth()
 {
+    if(!dontincrease){
     health+=1;
-    costToPass+=5*1;
-    if(health>10)
+    costToPass+=1;
+    if(health>50)
         health=10;
     if(costToPass>60)
-        costToPass=60;
+        costToPass=60;}
 }

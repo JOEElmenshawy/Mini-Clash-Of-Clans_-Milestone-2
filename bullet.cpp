@@ -22,7 +22,12 @@ bullet::bullet(int x, int y,int d):targetX(x),targetY(y),damage(d) {
     Q->play();
     QTimer * timer= new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(move()));
-    timer->start(50);
+    timer->start(10);
+}
+
+bullet::~bullet()
+{
+
 }
 
 double bullet::CalculatePos()
@@ -34,9 +39,9 @@ double bullet::CalculatePos()
 }
 void bullet::move()
 {
-    if(g->enemydestroyed==2&&!g->powerup)
+    if(g->enemydestroyed/20>g->powerup)
     {
-        g->powerup=true;
+        g->powerup++;
         damage+=damage*0.10;
         qDebug()<<"damage increased";
     }

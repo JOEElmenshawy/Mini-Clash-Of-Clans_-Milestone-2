@@ -49,4 +49,8 @@
         <file>images/11.png</file>
         <file>images/12.png</file>
     </qresource>
+    <qresource prefix="/citizen">
+        <file>images/citizen 1.png</file>
+        <file>images/citizen2.png</file>
+    </qresource>
 </RCC>

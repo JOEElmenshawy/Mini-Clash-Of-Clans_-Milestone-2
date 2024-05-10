@@ -14,6 +14,7 @@ public:
 
 private:
     int health;
+    bool  dontincrease;
     QGraphicsItem * border;
 };
 

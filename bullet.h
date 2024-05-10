@@ -11,6 +11,7 @@ public slots:
     void move();
 public:
     bullet(int x, int y,int d);
+    ~bullet();
     double CalculatePos();
 private:
     int targetX;

@@ -18,8 +18,14 @@ class  Game:public QGraphicsView
 Q_OBJECT
 public:
     Game(int h);
-    bool powerup;
+    int powerup;
+    double increasedamageevery20;
+    int hardness;
     bool powermarker;
+     std::vector<std::vector<node*>> creatNodes(std::vector<std::vector< ObjectStruct*>>& objects);
+     std::vector<std::vector<node*>> nodes;
+     void printNodes() const;
+     void printConnections() const ;
      void mousePressEvent(QMouseEvent* event) override ;
     bool eventFilter(QObject *obj, QEvent *event) override;
      void gameOver();
@@ -36,7 +42,7 @@ public slots:
     void createMarkers();
 private:
     QGraphicsView * view;
-    int hardness;
+
     int extradamage;
     QMediaPlayer*Q;
 QGraphicsScene * scene;
