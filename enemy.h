@@ -20,6 +20,7 @@ public:
 private:
     int enemyRow;
     int enemyCol;
+    int animationiterator;
     std::vector<node*> path;
     int damage;
     bool continuemove;

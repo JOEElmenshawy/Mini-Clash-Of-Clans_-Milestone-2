@@ -53,4 +53,8 @@
         <file>images/citizen 1.png</file>
         <file>images/citizen2.png</file>
     </qresource>
+    <qresource prefix="/dragon">
+        <file>images/dragon1.png</file>
+        <file>images/dragon2.png</file>
+    </qresource>
 </RCC>

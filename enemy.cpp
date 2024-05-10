@@ -25,7 +25,7 @@ Enemy::Enemy(int d)
     enemydied=false;
     continuemove =true;
     health = 200;
-    setPixmap(QPixmap(":/new/images/images/enemy.png").scaled(70, 70));
+    setPixmap(QPixmap(":/dragon/images/dragon1.png").scaled(45, 45));
 
     int random_number = rand() %1125;
 
@@ -56,11 +56,11 @@ Enemy::Enemy(int d)
     node* end = g->nodes[g->getCastle()->castleRow][g->getCastle()->castleColumn];
      path = dijkstra(start, end);
 
-    // for (auto it = path.rbegin(); it != path.rend(); it++) {
-    //      qDebug()<<(*it)->object->name << (*it)->object->id << ": ";
-    //     qDebug()  << "(" << (*it)->object->x() << ", " << (*it)->object->y() << ")" << "\n";
-    // }
-    //    qDebug()  << "\n";
+    for (auto it = path.rbegin(); it != path.rend(); it++) {
+         qDebug()<<(*it)->object->name << (*it)->object->id << ": ";
+        qDebug()  << "(" << (*it)->object->x() << ", " << (*it)->object->y() << ")" << "\n";
+    }
+       qDebug()  << "\n";
     itr = path.size()-2;
     currNode = path[itr];
 
@@ -72,7 +72,7 @@ Enemy::Enemy(int d)
     connect( MoveTimer,&QTimer::timeout, this, [=](){
 
         distance = sqrt(pow(this->x() - currNode->object->x(), 2) + pow(this->y() - currNode->object->y(), 2));
-        if(distance<50)
+        if(distance<30)
         {
             if(itr != 0){
                 itr--;
@@ -112,14 +112,21 @@ void Enemy::Die(){
         delete this;
 }
 void Enemy::move()
-{    dX = (currNode->object->x() - this->x()) / distance;
+{
+    if(animationiterator%4>1)
+        setPixmap(QPixmap(":/dragon/images/dragon1.png").scaled(45, 45));
+
+    else {
+        setPixmap(QPixmap(":/dragon/images/dragon2.png").scaled(45, 45));
+    }
+    animationiterator++;    dX = (currNode->object->x() - this->x()) / distance;
     dY = (currNode->object->y() - this->y()) / distance;
 
     float newX = this->x() + 2*dX;
     float newY = this->y() + 2*dY;
 
     bool passFence=false;
-    //qDebug()<<currNode->object->name<<path[itr+1]->object->name;
+    qDebug()<<currNode->object->name<<path[itr+1]->object->name;
     if((currNode->object->name=="emptyland"||currNode->object->name=="Castle")&&path[itr+1]->object->name=="emptyland")
     {
         passFence=true;

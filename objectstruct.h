@@ -8,6 +8,7 @@ class ObjectStruct : public QGraphicsPixmapItem
 {
 public:
     std::string id;
+    bool inner;
     QString name;
     int costToPass;
     ObjectStruct();

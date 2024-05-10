@@ -92,8 +92,17 @@ Game::Game(int h)
             {
                 objects[i][j]=new empty();
                 objects[i][j]->setPos(75*j,75*i);
+                objects[i][j]->inner=false;
                scene->addItem(objects[i][j]);
-            }else if(boarddata[i][j] == 1)
+            }
+            else if(boarddata[i][j] == 7)
+            {
+                objects[i][j]=new empty();
+                objects[i][j]->setPos(75*j,75*i);
+                 objects[i][j]->inner=true;
+                scene->addItem(objects[i][j]);
+            }
+            else if(boarddata[i][j] == 1)
             {
                 objects[i][j]=castle;
                 objects[i][j]->setPos(75*j,75*i);
@@ -119,16 +128,17 @@ Game::Game(int h)
     }
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
-            objects[i][j]->id =  "(" + std::to_string(i) + ", " + std::to_string(j) + ")";
+            objects[i][j]->id =  std::to_string(i) + ", " + std::to_string(j) ;
         }
     }
 
     view->viewport()->installEventFilter(this);
   nodes = creatNodes(objects);
-// createEnemy();
+
+    printConnections();
 Enemytimer = new QTimer();
 QObject::connect(Enemytimer,SIGNAL(timeout()),this,SLOT(createEnemy()));
-Enemytimer->start((9-hardness)*1000+2000);
+Enemytimer->start((9-hardness)*1000+4000);
 CitizenTimer = new QTimer();
 QObject::connect(  CitizenTimer,SIGNAL(timeout()),this,SLOT(createCitizens()));
 CitizenTimer->start(1);
@@ -186,7 +196,7 @@ increasedamageevery20=0;
     {
          increasedamageevery20+= 10*(6-hardness)*0.1;
     }
-        qDebug()<<"powered up"<<increasedamageevery20;
+    //    qDebug()<<"powered up"<<increasedamageevery20;
     bullet* B = new bullet(event->pos().x(), event->pos().y(),extradamage+increasedamageevery20+10*(6-hardness));
     B->setPos(cannonx+75/2,cannony+75/2);
     scene->addItem(B);
@@ -235,12 +245,12 @@ void Game::printConnections() const {
         // Iterate over each node in the row
         for (const auto& node_ptr : row) {
             // Print connections of the current node
-            qDebug() << "Connections of Node (" << node_ptr->object->x() << ", " << node_ptr->object->y() << "):";
+            qDebug()<<node_ptr->object->name << "Connections of Node (" << node_ptr->object->y()/75 << ", " << node_ptr->object->x()/75 << "):";
 
             // Iterate over each connection of the current node
             for (const auto& connection : node_ptr->connections) {
                 // Print the coordinates of the connected node
-                qDebug() << "  Connected Node: (" << connection.second.first->object->x()/75 << ", " << connection.second.first->object->y()/75 << ")"<<"cost:"<<connection.second.second;
+                qDebug() << "  Connected Node: (" << connection.second.first->object->y()/75 << ", " << connection.second.first->object->x()/75 << ")"<<"cost:"<<connection.second.second;
             }
         }
     }
@@ -265,20 +275,22 @@ std::vector<std::vector<node *> > Game::creatNodes(std::vector<std::vector<Objec
 
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
-            if (i > 0) nodes[i][j]->addConnection(nodes[i-1][j],castle->x(),castle->y()); // upper neighbour
-            if (i < rows - 1) nodes[i][j]->addConnection(nodes[i+1][j],castle->x(),castle->y()); // Down neighbour
-            if (j > 0) nodes[i][j]->addConnection(nodes[i][j-1],castle->x(),castle->y()); // left neighbour
-            if (j < cols - 1) nodes[i][j]->addConnection(nodes[i][j+1],castle->x(),castle->y()); // right neighbour
+            if (j > 0) nodes[i][j]->addConnection(nodes[i][j-1]); // left neighbour
+            if (j < cols - 1) nodes[i][j]->addConnection(nodes[i][j+1]); // right neighbour
+            if (i > 0) nodes[i][j]->addConnection(nodes[i-1][j]); // upper neighbour
+            if (i < rows - 1) nodes[i][j]->addConnection(nodes[i+1][j]); // Down neighbour
+
 
             // Diagonal connections
-            if (i > 0 && j > 0)
-                nodes[i][j]->addConnection(nodes[i-1][j-1],castle->x(),castle->y()); // top left neighbour
-            if (i > 0 && j < cols - 1)
-                nodes[i][j]->addConnection(nodes[i-1][j+1],castle->x(),castle->y()); // top right neighbour
             if (i < rows - 1 && j > 0)
-                nodes[i][j]->addConnection(nodes[i+1][j-1],castle->x(),castle->y()); // bottom left neighbour
+                nodes[i][j]->addConnection(nodes[i+1][j-1]); // bottom left neighbour
             if (i < rows - 1 && j < cols - 1)
-                nodes[i][j]->addConnection(nodes[i+1][j+1],castle->x(),castle->y()); // bottom right neighbour
+                nodes[i][j]->addConnection(nodes[i+1][j+1]); // bottom right neighbour
+            if (i > 0 && j > 0)
+                nodes[i][j]->addConnection(nodes[i-1][j-1]); // top left neighbour
+            if (i > 0 && j < cols - 1)
+                nodes[i][j]->addConnection(nodes[i-1][j+1]); // top right neighbour
+
         }
     }
 
