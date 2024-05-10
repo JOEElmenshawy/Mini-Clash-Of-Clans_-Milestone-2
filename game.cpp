@@ -45,10 +45,7 @@ Game::Game(int h)
     view->setWindowTitle("Game Project");
     scene=new QGraphicsScene;
     scene->setSceneRect(0,0,1125,750);
-    objects.resize(10);
-    for(int i = 0; i < 10; i++){
-        objects[i].resize(15);
-    }
+
     view->setFixedSize(1125,750);
     view->setBackgroundBrush(QBrush(QImage(":/new/images/images/background.png")));
     view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -56,25 +53,41 @@ Game::Game(int h)
     view->setScene(scene);
     QFile file(Map);
     file.open(QIODevice::ReadOnly);
-  //  std::vector<std::vector<int>>boarddata;
-    int boarddata[10][15];
+   std::vector<std::vector<int>>boarddata;
+    int rows=0;
+    int cols=0;
     QTextStream stream(&file);
-    QString temp;
-    for(int i=0;i<10;i++){
-        for(int j=0;j<15;j++){
-            stream>> temp;
-            boarddata[i][j] = temp.toInt();
-        }
+    while (!stream.atEnd()) {
+        QString row = stream.readLine();
+        QStringList numbers = row.split(' ');
+        std::vector<int> temp;
+        for (const QString& number : numbers) {
+            temp.push_back(number.toInt());
+            }
+            boarddata.push_back(temp);
+            rows++;
+            cols = temp.size();
     }
+    file.close();
+    qDebug()<<rows<<cols;
+    objects.resize(rows);
+    for(int i = 0; i < rows; i++)
+    {
+            objects[i].resize(cols);
+    }
+
+
+
+
     QPixmap castlephoto (":/new/images/images/caslte.png");
     castlephoto=castlephoto.scaledToWidth(75);
     castlephoto=castlephoto.scaledToHeight(75);
     castle = new Castle();
     castle->setPixmap(castlephoto);
 
-    QGraphicsPixmapItem boardimages[10][15];
-    for(int i=0;i<10;i++){
-        for(int j=0;j<15;j++){
+    QGraphicsPixmapItem boardimages[rows][cols];
+    for(int i=0;i<rows;i++){
+        for(int j=0;j<cols;j++){
             if(boarddata[i][j] == 0)
             {
                 objects[i][j]=new empty();
@@ -104,8 +117,8 @@ Game::Game(int h)
             }
         }
     }
-    for (int i = 0; i < 10; i++) {
-        for (int j = 0; j < 15; j++) {
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
             objects[i][j]->id =  "(" + std::to_string(i) + ", " + std::to_string(j) + ")";
         }
     }

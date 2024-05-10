@@ -49,40 +49,40 @@ void Defense::LoadPhotos() {
    // qDebug()<<angle;
     // Determine which picture to load based on the angle
     if (angle >= 0 && angle < 30) {
-        // Handle picture 1
+
         setPixmap(rotatingPictures[7].scaled(75, 75));
     } else if (angle >= 30 && angle < 60) {
-        // Handle picture 2
+
         setPixmap(rotatingPictures[6].scaled(75, 75));
     } else if (angle >= 60 && angle < 90) {
-        // Handle picture 3
+
         setPixmap(rotatingPictures[5].scaled(75, 75));
     } else if (angle >= 90 && angle < 120) {
-        // Handle picture 4
+
         setPixmap(rotatingPictures[4].scaled(75, 75));
     } else if (angle >= 120 && angle < 150) {
-        // Handle picture 5
+
         setPixmap(rotatingPictures[3].scaled(75, 75));
     } else if (angle >= 150 && angle < 180) {
-        // Handle picture 6
+
         setPixmap(rotatingPictures[2].scaled(75, 75));
     } else if (angle >= -180 && angle < -150) {
-        // Handle picture 7
+
         setPixmap(rotatingPictures[1].scaled(75, 75));
     } else if (angle >= -150 && angle < -120) {
-        // Handle picture 8
+
         setPixmap(rotatingPictures[0].scaled(75, 75));
     } else if (angle >= -120 && angle < -90) {
-        // Handle picture 9
+
         setPixmap(rotatingPictures[11].scaled(75, 75));
     } else if (angle >= -90 && angle < -60) {
-        // Handle picture 10
+
         setPixmap(rotatingPictures[10].scaled(75, 75));
     } else if (angle >= -60 && angle < -30) {
-        // Handle picture 11
+
         setPixmap(rotatingPictures[9].scaled(75, 75));
     } else if (angle >= -30 && angle < 0) {
-        // Handle picture 12
+
         setPixmap(rotatingPictures[8].scaled(75, 75));
     }
 }
