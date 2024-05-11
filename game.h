@@ -23,7 +23,7 @@ public:
     int hardness;
     bool powermarker;
     bool gameover;
-     std::vector<std::vector<node*>> ConstructNodesforTheGraph(std::vector<std::vector< ImageElement*>>& objects);
+     std::vector<std::vector<node*>> ConstructNodesforTheGraph(std::vector<std::vector< ImageElement*>>& );
      std::vector<std::vector<node*>> nodes;
      void printNodes() const;
      void printConnections() const ;

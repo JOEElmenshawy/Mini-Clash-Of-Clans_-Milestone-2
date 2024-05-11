@@ -148,7 +148,7 @@ QObject::connect(  CitizenTimer,SIGNAL(timeout()),this,SLOT(createCitizens()));
 CitizenTimer->start(1);
 MarkerTimer = new QTimer();
 QObject::connect(MarkerTimer,SIGNAL(timeout()),this,SLOT(createMarkers()));
-MarkerTimer->start(15000);
+MarkerTimer->start(50000);
 wintimer = new QTimer(this);
 
 // Set a single-shot timer for 5 minutes
@@ -272,7 +272,13 @@ Game::~Game()
     wintimer->stop();
     Enemytimer->stop();
     CitizenTimer->stop();
-
+    for(int i=0;i<nodes.size();i++)
+    {
+        for(int j=0;j<nodes[i].size();j++)
+        {
+            delete nodes[i][j];
+        }
+    }
 
 }
 
@@ -289,7 +295,6 @@ void Game::UpdateNeighbours()
             if (i < rows - 1) nodes[i][j]->addneighbour(nodes[i+1][j]); // Down neighbour
 
 
-            // Diagonal connections
             if (i < rows - 1 && j > 0)
                 nodes[i][j]->addneighbour(nodes[i+1][j-1]); // bottom left neighbour
             if (i < rows - 1 && j < cols - 1)
@@ -324,7 +329,6 @@ std::vector<std::vector<node *> > Game::ConstructNodesforTheGraph(std::vector<st
             if (i < rows - 1) nodes[i][j]->addneighbour(nodes[i+1][j]); // Down neighbour
 
 
-            // Diagonal connections
             if (i < rows - 1 && j > 0)
                 nodes[i][j]->addneighbour(nodes[i+1][j-1]); // bottom left neighbour
             if (i < rows - 1 && j < cols - 1)
