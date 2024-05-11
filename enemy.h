@@ -15,7 +15,7 @@ public:
     void DecreaseHealth(int d);
 
 
-    std::vector<node*> dijkstra(node* start, node* end);
+    std::vector<node*> DikestraAlgorithm(node* start, node* end);
     ~Enemy();
 private:
     int enemyRow;

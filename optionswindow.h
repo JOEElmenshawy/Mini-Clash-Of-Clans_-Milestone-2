@@ -22,6 +22,8 @@ private slots:
 
     void on_VolumeSlider_valueChanged(int value);
 
+    void on_LoadMap_clicked();
+
 private:
     Ui::OptionsWindow *ui;
 };

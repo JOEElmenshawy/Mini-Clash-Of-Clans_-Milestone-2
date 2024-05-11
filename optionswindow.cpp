@@ -3,6 +3,8 @@
 #include"mainwindow.h"
 #include<QBrush>
 #include<QSlider>
+#include<QFileDialog>
+#include<QMessageBox>
 extern int Volume;
 extern QString Map;
 extern QString land;
@@ -13,6 +15,7 @@ OptionsWindow::OptionsWindow(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::OptionsWindow)
 {
+
     ui->setupUi(this);
     QPixmap m1(":/new/images/images/Map1.png.jpg");
     QPixmap m2(":/new/images/images/Map2.png.jpg");
@@ -89,5 +92,22 @@ void OptionsWindow::on_VolumeSlider_valueChanged(int value)
 {
     Volume =value;
     qDebug()<<"Changed";
+}
+
+
+void OptionsWindow::on_LoadMap_clicked()
+{
+    QString filePath = QFileDialog::getOpenFileName(this,"Load Edge Data",QDir::currentPath(),"Text files (*.txt)");
+    if (filePath.isEmpty()) {
+        return;
+    }
+
+    Map = filePath;
+
+    QFile file(filePath);
+    if (!file.open(QIODevice::ReadOnly)) {
+        QMessageBox::about(this, "Failed to open file for reading","ok");
+        return;
+    }
 }
 

@@ -15,7 +15,7 @@ wongame::wongame(QWidget *parent) :
     ui->returnmenulabel->setPixmap(p);
     QMediaPlayer *Q = new QMediaPlayer;
     Q ->setSource(QUrl("qrc:/new/Sound/Sound/WINGAME.mp3"));
-
+    delete g;
     QAudioOutput *audio = new QAudioOutput;
     Q->setAudioOutput(audio);
     audio->setVolume(Volume);

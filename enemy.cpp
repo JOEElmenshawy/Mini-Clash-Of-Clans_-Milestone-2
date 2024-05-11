@@ -20,12 +20,13 @@ extern Game *g;
 extern int Volume;
 Enemy::Enemy(int d)
 {
+    animationiterator=0;
     damage=d;
     qDebug()<<"enemy constructed";
     enemydied=false;
     continuemove =true;
     health = 200;
-    setPixmap(QPixmap(":/dragon/images/dragon1.png").scaled(45, 45));
+    setPixmap(QPixmap(":/dragon/images/dragon1.png").scaled(75, 75));
 
     int random_number = rand() %1125;
 
@@ -46,6 +47,7 @@ Enemy::Enemy(int d)
         }
     }
     setPos(random_number,random_number2);
+
    //   setPos(0,0);
     enemyRow=y()/75;
     enemyCol=x()/75;
@@ -54,7 +56,7 @@ Enemy::Enemy(int d)
   //   printConnections();
     node* start = g->nodes[enemyRow][enemyCol];
     node* end = g->nodes[g->getCastle()->castleRow][g->getCastle()->castleColumn];
-     path = dijkstra(start, end);
+     path = DikestraAlgorithm(start, end);
 
     for (auto it = path.rbegin(); it != path.rend(); it++) {
          qDebug()<<(*it)->object->name << (*it)->object->id << ": ";
@@ -114,10 +116,10 @@ void Enemy::Die(){
 void Enemy::move()
 {
     if(animationiterator%4>1)
-        setPixmap(QPixmap(":/dragon/images/dragon1.png").scaled(45, 45));
+        setPixmap(QPixmap(":/dragon/images/dragon1.png").scaled(75, 75));
 
     else {
-        setPixmap(QPixmap(":/dragon/images/dragon2.png").scaled(45, 45));
+        setPixmap(QPixmap(":/dragon/images/dragon2.png").scaled(75, 75));
     }
     animationiterator++;    dX = (currNode->object->x() - this->x()) / distance;
     dY = (currNode->object->y() - this->y()) / distance;
@@ -137,13 +139,22 @@ void Enemy::move()
       //  else
       //  qDebug()<<"ill not pass the fence";
     continuemove=true;
+    bool fenceispartofpath=false;
     QList<QGraphicsItem *> colliding_items = collidingItems();
     for (int i = 0; i < colliding_items.size(); ++i) {
         if (Fence* fenceItem = dynamic_cast<Fence*>(colliding_items[i])) {
-            if(!passFence){
-            fenceItem->DecreaseHealth(damage);
-                continuemove=false;
-         //   Die();
+            if(!passFence&&fenceItem->name=="fence"){
+                for(auto ptr:path)
+                {
+                    if (ptr->object->x()==fenceItem->x()&&ptr->object->y()==fenceItem->y())
+                        fenceispartofpath=true;
+                }
+                if(fenceispartofpath)
+                {
+                    fenceItem->DecreaseHealth(damage);
+                    continuemove=false;
+                }
+
             }
         }
         else if(Castle* castleItem = dynamic_cast<Castle*>(colliding_items[i])){
@@ -165,7 +176,7 @@ Enemy::~Enemy()
 }
 
 using namespace std;
-std::vector<node*> Enemy::dijkstra(node* start, node* end) {
+std::vector<node*> Enemy::DikestraAlgorithm(node* start, node* end) {
     std::vector<node*> path;
     std::unordered_map<node*, double> dist;
     std::unordered_map<node*, node*> prev;
@@ -189,7 +200,7 @@ std::vector<node*> Enemy::dijkstra(node* start, node* end) {
             break;
         }
 
-        for (const auto& connection : u->connections) {
+        for (const auto& connection : u->Neighbours) {
             node* v = connection.second.first;
             double weight = connection.second.second;
 

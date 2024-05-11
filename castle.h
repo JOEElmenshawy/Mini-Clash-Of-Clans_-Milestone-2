@@ -4,8 +4,8 @@
 #include <QObject>
 #include "fence.h"
 #include <Qtime>
-#include"objectstruct.h"
-class Castle: public QObject , public ObjectStruct
+#include"UniqueNode.h"
+class Castle: public QObject , public UniqueNode
 { Q_OBJECT
 public:
     Castle();

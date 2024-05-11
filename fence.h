@@ -3,8 +3,8 @@
 #include <QGraphicsRectItem>
 #include <QObject>
 #include<QGraphicsScene>
-#include"objectstruct.h"
-class Fence:public QObject , public ObjectStruct
+#include"UniqueNode.h"
+class Fence:public QObject , public UniqueNode
 {
 public:
     Fence();

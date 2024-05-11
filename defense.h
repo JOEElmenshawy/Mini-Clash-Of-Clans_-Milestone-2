@@ -6,8 +6,8 @@
 #include<QGraphicsScene>
 #include<QGraphicsSceneMouseEvent>
 #include<QKeyEvent>
-#include"objectstruct.h"
-class Defense:public QObject , public ObjectStruct
+#include"UniqueNode.h"
+class Defense:public QObject , public UniqueNode
 {
 public:
     Defense();

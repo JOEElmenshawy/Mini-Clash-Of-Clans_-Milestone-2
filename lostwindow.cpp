@@ -8,6 +8,7 @@ LostWindow::LostWindow(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::LostWindow)
 {
+
     ui->setupUi(this);
     QPixmap p(":/new/images/images/GameOver.png");
     p=p.scaled(ui->returnmenulabel->size());

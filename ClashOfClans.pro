@@ -10,6 +10,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    UniqueNode.cpp \
     bullet.cpp \
     castle.cpp \
     citizens.cpp \
@@ -23,12 +24,12 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     node.cpp \
-    objectstruct.cpp \
     optionswindow.cpp \
     wongame.cpp \
     wonlevel.cpp
 
 HEADERS += \
+    UniqueNode.h \
     bullet.h \
     castle.h \
     citizens.h \
@@ -41,7 +42,6 @@ HEADERS += \
     lostwindow.h \
     mainwindow.h \
     node.h \
-    objectstruct.h \
     optionswindow.h \
     wongame.h \
     wonlevel.h

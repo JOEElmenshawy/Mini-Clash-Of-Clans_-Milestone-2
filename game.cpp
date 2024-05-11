@@ -73,10 +73,10 @@ Game::Game(int h)
     }
     file.close();
     qDebug()<<rows<<cols;
-    objects.resize(rows);
+    UniqueNodes.resize(rows);
     for(int i = 0; i < rows; i++)
     {
-            objects[i].resize(cols);
+            UniqueNodes[i].resize(cols);
     }
 
 
@@ -93,50 +93,50 @@ Game::Game(int h)
         for(int j=0;j<cols;j++){
             if(boarddata[i][j] == 0)
             {
-                objects[i][j]=new empty();
-                objects[i][j]->setPos(75*j,75*i);
-                objects[i][j]->inner=false;
-               scene->addItem(objects[i][j]);
+                UniqueNodes[i][j]=new empty();
+                UniqueNodes[i][j]->setPos(75*j,75*i);
+                UniqueNodes[i][j]->inner=false;
+               scene->addItem(UniqueNodes[i][j]);
             }
             else if(boarddata[i][j] == 7)
             {
-                objects[i][j]=new empty();
-                objects[i][j]->setPos(75*j,75*i);
-                 objects[i][j]->inner=true;
-                scene->addItem(objects[i][j]);
+                UniqueNodes[i][j]=new empty();
+                UniqueNodes[i][j]->setPos(75*j,75*i);
+                 UniqueNodes[i][j]->inner=true;
+                scene->addItem(UniqueNodes[i][j]);
             }
             else if(boarddata[i][j] == 1)
             {
-                objects[i][j]=castle;
-                objects[i][j]->setPos(75*j,75*i);
-                scene->addItem(objects[i][j]);
+                UniqueNodes[i][j]=castle;
+                UniqueNodes[i][j]->setPos(75*j,75*i);
+                scene->addItem(UniqueNodes[i][j]);
                 castle->castleRow=i;
                 castle->castleColumn=j;
             }
             else if (boarddata[i][j] == 2)
             {
-                objects[i][j]= new Defense();
-                objects[i][j]->setPos(75*j,75*i);
+                UniqueNodes[i][j]= new Defense();
+                UniqueNodes[i][j]->setPos(75*j,75*i);
                 cannonx=75*j;
                 cannony=75*i;
-                scene->addItem(objects[i][j]);
+                scene->addItem(UniqueNodes[i][j]);
             }
             else
             {
-                objects[i][j]= new Fence();
-                objects[i][j]->setPos(75*j,75*i);
-                scene->addItem(objects[i][j]);
+                UniqueNodes[i][j]= new Fence();
+                UniqueNodes[i][j]->setPos(75*j,75*i);
+                scene->addItem(UniqueNodes[i][j]);
             }
         }
     }
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
-            objects[i][j]->id =  std::to_string(i) + ", " + std::to_string(j) ;
+            UniqueNodes[i][j]->id =  std::to_string(i) + ", " + std::to_string(j) ;
         }
     }
 
     view->viewport()->installEventFilter(this);
-  nodes = creatNodes(objects);
+  nodes = ConstructNodesforTheGraph(UniqueNodes);
 
     printConnections();
 Enemytimer = new QTimer();
@@ -152,8 +152,10 @@ wintimer = new QTimer(this);
 
 // Set a single-shot timer for 5 minutes
 wintimer->setSingleShot(true);
-wintimer->start(1 * 200* 1000); // 60 seconds in milliseconds
-
+wintimer->start(1 * 200* 1000);    // 60 seconds in milliseconds
+Update= new QTimer();
+QObject::connect(Update,SIGNAL(timeout()),this,SLOT(UpdateNeighbours()));
+Update->start(3000);
 // Connect a slot to the timeout() signal of the timer
 connect(wintimer, &QTimer::timeout, this, [=]()
         {
@@ -222,14 +224,13 @@ bool Game::eventFilter(QObject *obj, QEvent *event)
 void Game::gameOver()
 {
 
-    wintimer->stop();
-    Enemytimer->stop();
-    CitizenTimer->stop();
-     scene->clear();
-    LostWindow* l=new LostWindow;
-   view->hide();
-   l->show();
+
+
    qDebug()<<" game over";
+    scene->clear();
+    LostWindow* l=new LostWindow;
+    view->hide();
+    l->show();
    delete this;
 }
 void Game::printNodes() const {
@@ -251,7 +252,7 @@ void Game::printConnections() const {
             qDebug()<<node_ptr->object->name << "Connections of Node (" << node_ptr->object->y()/75 << ", " << node_ptr->object->x()/75 << "):";
 
             // Iterate over each connection of the current node
-            for (const auto& connection : node_ptr->connections) {
+            for (const auto& connection : node_ptr->Neighbours) {
                 // Print the coordinates of the connected node
                 qDebug() << "  Connected Node: (" << connection.second.first->object->y()/75 << ", " << connection.second.first->object->x()/75 << ")"<<"cost:"<<connection.second.second;
             }
@@ -262,17 +263,49 @@ Game::~Game()
 {
     Q->stop();
     delete Q;
+    Update->stop();
+    wintimer->stop();
+    Enemytimer->stop();
+    CitizenTimer->stop();
+
+
 }
 
-std::vector<std::vector<node *> > Game::creatNodes(std::vector<std::vector<ObjectStruct *> > &objects)
+void Game::UpdateNeighbours()
 {
-    int rows = objects.size();
-    int cols = objects[0].size();
+    int rows = UniqueNodes.size();
+    int cols = UniqueNodes[0].size();
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            if (j > 0) nodes[i][j]->addConnection(nodes[i][j-1]); // left neighbour
+            if (j < cols - 1) nodes[i][j]->addConnection(nodes[i][j+1]); // right neighbour
+            if (i > 0) nodes[i][j]->addConnection(nodes[i-1][j]); // upper neighbour
+            if (i < rows - 1) nodes[i][j]->addConnection(nodes[i+1][j]); // Down neighbour
+
+
+            // Diagonal connections
+            if (i < rows - 1 && j > 0)
+                nodes[i][j]->addConnection(nodes[i+1][j-1]); // bottom left neighbour
+            if (i < rows - 1 && j < cols - 1)
+                nodes[i][j]->addConnection(nodes[i+1][j+1]); // bottom right neighbour
+            if (i > 0 && j > 0)
+                nodes[i][j]->addConnection(nodes[i-1][j-1]); // top left neighbour
+            if (i > 0 && j < cols - 1)
+                nodes[i][j]->addConnection(nodes[i-1][j+1]); // top right neighbour
+
+        }
+    }
+}
+
+std::vector<std::vector<node *> > Game::ConstructNodesforTheGraph(std::vector<std::vector<UniqueNode *> > &UniqueNodes)
+{
+    int rows = UniqueNodes.size();
+    int cols = UniqueNodes[0].size();
 
     std::vector<std::vector<node*>> nodes(rows, std::vector<node*>(cols));
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
-            nodes[i][j] = new node(objects[i][j]);
+            nodes[i][j] = new node(UniqueNodes[i][j]);
         }
     }
 

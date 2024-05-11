@@ -22,7 +22,7 @@ public:
     double increasedamageevery20;
     int hardness;
     bool powermarker;
-     std::vector<std::vector<node*>> creatNodes(std::vector<std::vector< ObjectStruct*>>& objects);
+     std::vector<std::vector<node*>> ConstructNodesforTheGraph(std::vector<std::vector< UniqueNode*>>& objects);
      std::vector<std::vector<node*>> nodes;
      void printNodes() const;
      void printConnections() const ;
@@ -34,12 +34,15 @@ public:
      Castle* getCastle();
     int cannonx,cannony;
      int enemydestroyed;
-    std::vector<std::vector<ObjectStruct*>> objects;
+    std::vector<std::vector<UniqueNode*>> UniqueNodes;
      ~Game();
+
+     QTimer* Update;
 public slots:
     void createEnemy();
     void createCitizens();
     void createMarkers();
+    void UpdateNeighbours();
 private:
     QGraphicsView * view;
 

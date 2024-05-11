@@ -1,8 +1,8 @@
 #ifndef EMPTY_H
 #define EMPTY_H
-#include "objectstruct.h"
+#include "UniqueNode.h"
 
-class empty : public ObjectStruct
+class empty : public UniqueNode
 {
 public:
     empty();

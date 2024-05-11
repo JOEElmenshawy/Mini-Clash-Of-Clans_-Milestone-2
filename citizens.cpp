@@ -162,7 +162,7 @@ std::vector<node*> Citizens::dijkstra(node* start, node* end) {
             break;
         }
 
-        for (const auto& connection : u->connections) {
+        for (const auto& connection : u->Neighbours) {
             node* v = connection.second.first;
             double weight = connection.second.second;
 
