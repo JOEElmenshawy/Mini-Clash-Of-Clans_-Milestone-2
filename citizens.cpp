@@ -24,12 +24,12 @@ Citizens::Citizens() {
                 lookFence();
             }
         else{
- distance = sqrt(pow(this->x() - currNode->object->x(), 2) + pow(this->y() - currNode->object->y(), 2));
-        if(distance<20)
+ distancetillCurrentNode = sqrt(pow(this->x() - CurrentNode->imgelemnt->x(), 2) + pow(this->y() - CurrentNode->imgelemnt->y(), 2));
+        if(distancetillCurrentNode<35)
         {
-            if(itr != 0){
-                itr--;
-                currNode = path[itr];
+            if(pathiterator != 0){
+                pathiterator--;
+                CurrentNode = shortestPath[pathiterator];
             }
         }
         if(!citizendied){
@@ -72,13 +72,11 @@ void Citizens::move()
             }
             }
         }
-    if(*g->nodes[targetFenceRow][targetFenceCol]->object->costToPass==60||*g->nodes[targetFenceRow][targetFenceCol]->object->costToPass==10){
+    if(g->nodes[targetFenceRow][targetFenceCol]->imgelemnt->costToPass==60||g->nodes[targetFenceRow][targetFenceCol]->imgelemnt->costToPass==10){
         shouldlookForFence=true;  setPixmap(QPixmap(":/new/images/images/citizenWorker.png").scaled(80, 80));
         return;}
-  //  qDebug()<<"cuurent node"<<currNode->id;
- //   if(!continuemove) qDebug()<<"i CANNOT MOVE";
-    dX = (currNode->object->x() - this->x()) / distance;
-    dY = (currNode->object->y() - this->y()) / distance;
+    dX = (CurrentNode->imgelemnt->x() - this->x()) / distancetillCurrentNode;
+    dY = (CurrentNode->imgelemnt->y() - this->y()) / distancetillCurrentNode;
 
     float newX = this->x() + 2*dX;
     float newY = this->y() + 2*dY;
@@ -109,15 +107,14 @@ void Citizens::lookFence()
     int min=6000;
     for (const auto& row : g->nodes) {
         for (const auto& node_ptr : row) {
-            if(node_ptr->object->name=="fence")
+            if(node_ptr->imgelemnt->name=="fence")
             {
              //   qDebug()<<"wer are in a fence that has health:"<<node_ptr->object->costToPass;
-                if (*node_ptr->object->costToPass<60&&*node_ptr->object->costToPass>10&&(sqrt(pow(this->x() -node_ptr->object->x(), 2) + pow(this->y() - node_ptr->object->y(), 2))<min))
+                if (node_ptr->imgelemnt->costToPass<60&&node_ptr->imgelemnt->costToPass>10&&(sqrt(pow(this->x() -node_ptr->imgelemnt->x(), 2) + pow(this->y() - node_ptr->imgelemnt->y(), 2))<min))
                 {
-                  //  qDebug()<<"fence health:"<<node_ptr->object->costToPass;
-                    min=sqrt(pow(this->x() -node_ptr->object->x(), 2) + pow(this->y() - node_ptr->object->y(), 2));
-                    targetFenceRow= node_ptr->object->y()/75;
-                     targetFenceCol= node_ptr->object->x()/75;
+                    min=sqrt(pow(this->x() -node_ptr->imgelemnt->x(), 2) + pow(this->y() - node_ptr->imgelemnt->y(), 2));
+                    targetFenceRow= node_ptr->imgelemnt->y()/75;
+                     targetFenceCol= node_ptr->imgelemnt->x()/75;
                     shouldlookForFence=false;
 
                 }
@@ -129,54 +126,49 @@ void Citizens::lookFence()
         node* start = g->nodes[y()/75][x()/75];
         //  qDebug()<<"targetrow:"<<targetFenceRow<<"targetcol"<<targetFenceCol;
         node* end = g->nodes[targetFenceRow][targetFenceCol];
-        path = dijkstra(start, end);
-         // for (auto it = path.rbegin(); it != path.rend(); it++) {
-         //      qDebug() << (*it)->object->id << ": ";
-         //     qDebug()  << "(" << (*it)->object->x() << ", " << (*it)->object->y() << ")" << "\n";
-         // }
-        itr = path.size()-2;
-        currNode = path[itr];
-        distance = sqrt(pow(this->x() - currNode->object->x(), 2) + pow(this->y() - currNode->object->y(), 2));
+        shortestPath = DikestraAlgorithm(start, end);
+        pathiterator = shortestPath.size()-2;
+        CurrentNode = shortestPath[pathiterator];
+        distancetillCurrentNode = sqrt(pow(this->x() - CurrentNode->imgelemnt->x(), 2) + pow(this->y() - CurrentNode->imgelemnt->y(), 2));
       //  qDebug()<<"rached here without crash";
     }
     }
 }
 
-using namespace std;
-std::vector<node*> Citizens::dijkstra(node* start, node* end) {
+std::vector<node*> Citizens::DikestraAlgorithm(node* start, node* end) {
     std::vector<node*> path;
-    std::unordered_map<node*, double> dist;
-    std::unordered_map<node*, node*> prev;
-    std::priority_queue<std::pair<double, node*>, std::vector<std::pair<double, node*>>, std::greater<std::pair<double, node*>>> pq;
+    std::unordered_map<node*, double> distances;
+    std::unordered_map<node*, node*> previous;
+    std::priority_queue<std::pair<double, node*>, std::vector<std::pair<double, node*>>, std::greater<std::pair<double, node*>>> priorityq;
 
-    for (const auto& row : g->nodes) {
+    for (const auto& row :g-> nodes) {
         for (const auto& node_ptr : row) {
-            dist[node_ptr] = std::numeric_limits<double>::infinity();
-            prev[node_ptr] = nullptr;
+            distances[node_ptr] = std::numeric_limits<double>::infinity();
+            previous[node_ptr] = nullptr;
         }
     }
 
-    dist[start] = 0;
-    pq.push({0, start});
+    distances[start] = 0;
+    priorityq.push({0, start});
 
-    while (!pq.empty()) {
-        node* u = pq.top().second;
-        pq.pop();
+    while (!priorityq.empty()) {
+        node* n = priorityq.top().second;
+        priorityq.pop();
 
-        if (u == end) {
+        if (n == end) {
             break;
         }
 
-        for (const auto& connection : u->Neighbours) {
-            node* v = connection.second.first;
-            double weight = *connection.second.second;
+        for (const auto& connection : n->Neighbours) {
+            node* n2 = connection.second.first;
+            double weight = connection.second.second;
 
-            double alt = dist[u] + weight;
+            double alternate = distances[n] + weight;
 
-            if (alt < dist[v]) {
-                dist[v] = alt;
-                prev[v] = u;
-                pq.push({alt, v});
+            if (alternate < distances[n2]) {
+                distances[n2] = alternate;
+                previous[n2] = n;
+                priorityq.push({alternate, n2});
             }
         }
     }
@@ -184,18 +176,7 @@ std::vector<node*> Citizens::dijkstra(node* start, node* end) {
     node* current = end;
     while (current != nullptr) {
         path.push_back(current);
-        current = prev[current];
-    }
-    for(auto iterator: dist)
-    {
-        if(iterator.second == std::numeric_limits<double>::infinity())
-        {
-          //  qDebug() << iterator.first->id << " has infinite distance";
-        }
-        else
-        {
-          //  qDebug() << iterator.first->id << " total dist=" << iterator.second;
-        }
+        current = previous[current];
     }
 
     return path;

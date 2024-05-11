@@ -27,11 +27,11 @@ private:
     int health;
     bool enemydied;
     QTimer* MoveTimer;
-    int itr;
+    int pathiterator;
 
-     node* currNode;
+     node* CurrentNode;
     float dX, dY;
-    float distance;
+    float distancetillCurrentNode;
 public slots:
     void move();
 

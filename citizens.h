@@ -11,7 +11,7 @@ class Citizens:public QObject, public QGraphicsPixmapItem
     Q_OBJECT
 public:
     Citizens();
-      std::vector<node*> dijkstra(node* start, node* end);
+      std::vector<node*> DikestraAlgorithm(node* start, node* end);
 public slots:
 
     void move();
@@ -25,12 +25,12 @@ private:
     int animationiterator;
     int targetFenceCol;
     void lookFence();
-    std::vector<node*> path;
+    std::vector<node*> shortestPath;
     QTimer* MoveTimer;
-    int itr;
-    node* currNode;
+    int pathiterator;
+    node* CurrentNode;
     float dX, dY;
-    float distance;
+    float distancetillCurrentNode;
 };
 
 #endif // CITIZENS_H

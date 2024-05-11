@@ -74,10 +74,10 @@ Game::Game(int h)
     }
     file.close();
     qDebug()<<rows<<cols;
-    UniqueNodes.resize(rows);
+    graphimages.resize(rows);
     for(int i = 0; i < rows; i++)
     {
-            UniqueNodes[i].resize(cols);
+            graphimages[i].resize(cols);
     }
 
 
@@ -94,55 +94,55 @@ Game::Game(int h)
         for(int j=0;j<cols;j++){
             if(boarddata[i][j] == 0)
             {
-                UniqueNodes[i][j]=new empty();
-                UniqueNodes[i][j]->setPos(75*j,75*i);
-                UniqueNodes[i][j]->inner=false;
-               scene->addItem(UniqueNodes[i][j]);
+                graphimages[i][j]=new empty();
+                graphimages[i][j]->setPos(75*j,75*i);
+                graphimages[i][j]->inner=false;
+               scene->addItem(graphimages[i][j]);
             }
             else if(boarddata[i][j] == 7)
             {
-                UniqueNodes[i][j]=new empty();
-                UniqueNodes[i][j]->setPos(75*j,75*i);
-                 UniqueNodes[i][j]->inner=true;
-                scene->addItem(UniqueNodes[i][j]);
+                graphimages[i][j]=new empty();
+                graphimages[i][j]->setPos(75*j,75*i);
+                 graphimages[i][j]->inner=true;
+                scene->addItem(graphimages[i][j]);
             }
             else if(boarddata[i][j] == 1)
             {
-                UniqueNodes[i][j]=castle;
-                UniqueNodes[i][j]->setPos(75*j,75*i);
-                scene->addItem(UniqueNodes[i][j]);
+                graphimages[i][j]=castle;
+                graphimages[i][j]->setPos(75*j,75*i);
+                scene->addItem(graphimages[i][j]);
                 castle->castleRow=i;
                 castle->castleColumn=j;
             }
             else if (boarddata[i][j] == 2)
             {
-                UniqueNodes[i][j]= new Defense();
-                UniqueNodes[i][j]->setPos(75*j,75*i);
+                graphimages[i][j]= new Defense();
+                graphimages[i][j]->setPos(75*j,75*i);
                 cannonx=75*j;
                 cannony=75*i;
-                scene->addItem(UniqueNodes[i][j]);
+                scene->addItem(graphimages[i][j]);
             }
             else
             {
-                UniqueNodes[i][j]= new Fence();
-                UniqueNodes[i][j]->setPos(75*j,75*i);
-                scene->addItem(UniqueNodes[i][j]);
+                graphimages[i][j]= new Fence();
+                graphimages[i][j]->setPos(75*j,75*i);
+                scene->addItem(graphimages[i][j]);
             }
         }
     }
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
-            UniqueNodes[i][j]->id =  std::to_string(i) + ", " + std::to_string(j) ;
+            graphimages[i][j]->rowAndColOfElement =  std::to_string(i) + ", " + std::to_string(j) ;
         }
     }
 
     view->viewport()->installEventFilter(this);
-  nodes = ConstructNodesforTheGraph(UniqueNodes);
+  nodes = ConstructNodesforTheGraph(graphimages);
 
     printConnections();
 Enemytimer = new QTimer();
 QObject::connect(Enemytimer,SIGNAL(timeout()),this,SLOT(createEnemy()));
-Enemytimer->start((9-hardness)*1000+4000);
+Enemytimer->start((9-hardness)*1000+3000);
 CitizenTimer = new QTimer();
 QObject::connect(  CitizenTimer,SIGNAL(timeout()),this,SLOT(createCitizens()));
 CitizenTimer->start(1);
@@ -153,11 +153,11 @@ wintimer = new QTimer(this);
 
 // Set a single-shot timer for 5 minutes
 wintimer->setSingleShot(true);
-wintimer->start(1 * 200* 1000);    // 60 seconds in milliseconds
+wintimer->start(120* 1000);
 Update= new QTimer();
 QObject::connect(Update,SIGNAL(timeout()),this,SLOT(UpdateNeighbours()));
-//Update->start(000);
-// Connect a slot to the timeout() signal of the timer
+Update->start(2000);
+// Connect a slot to the timer
 connect(wintimer, &QTimer::timeout, this, [=]()
         {
              Enemytimer->stop();
@@ -206,11 +206,9 @@ increasedamageevery20=0;
     {
          increasedamageevery20+= 10*(6-hardness)*0.1;
     }
-    //    qDebug()<<"powered up"<<increasedamageevery20;
     bullet* B = new bullet(event->pos().x(), event->pos().y(),extradamage+increasedamageevery20+10*(6-hardness));
     B->setPos(cannonx+75/2,cannony+75/2);
     scene->addItem(B);
-  //  qDebug() << event->pos().x();
     }
 }
 
@@ -246,7 +244,7 @@ void Game::printNodes() const {
         // Iterate over each node in the row
         for (const auto& node_ptr : row) {
             // Print the coordinates of the node
-            qDebug() << "Node: (" << node_ptr->object->x() << ", " << node_ptr->object->y() << ")";
+            qDebug() << "Node: (" << node_ptr->imgelemnt->x() << ", " << node_ptr->imgelemnt->y() << ")";
         }
     }
 }
@@ -256,12 +254,12 @@ void Game::printConnections() const {
         // Iterate over each node in the row
         for (const auto& node_ptr : row) {
             // Print connections of the current node
-            qDebug()<<node_ptr->object->name << "Connections of Node (" << node_ptr->object->y()/75 << ", " << node_ptr->object->x()/75 << "):";
+            qDebug()<<node_ptr->imgelemnt->name << "Connections of Node (" << node_ptr->imgelemnt->y()/75 << ", " << node_ptr->imgelemnt->x()/75 << "):";
 
             // Iterate over each connection of the current node
             for (const auto& connection : node_ptr->Neighbours) {
                 // Print the coordinates of the connected node
-                qDebug() << "  Connected Node: (" << connection.second.first->object->y()/75 << ", " << connection.second.first->object->x()/75 << ")"<<"cost:"<<connection.second.second;
+                qDebug() << "  Connected Node: (" << connection.second.first->imgelemnt->y()/75 << ", " << connection.second.first->imgelemnt->x()/75 << ")"<<"cost:"<<connection.second.second;
             }
         }
     }
@@ -281,32 +279,32 @@ Game::~Game()
 void Game::UpdateNeighbours()
 {
     if(!gameover){
-    int rows = UniqueNodes.size();
-    int cols = UniqueNodes[0].size();
+    int rows = graphimages.size();
+    int cols = graphimages[0].size();
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
-            if (j > 0) nodes[i][j]->addConnection(nodes[i][j-1]); // left neighbour
-            if (j < cols - 1) nodes[i][j]->addConnection(nodes[i][j+1]); // right neighbour
-            if (i > 0) nodes[i][j]->addConnection(nodes[i-1][j]); // upper neighbour
-            if (i < rows - 1) nodes[i][j]->addConnection(nodes[i+1][j]); // Down neighbour
+            if (j > 0) nodes[i][j]->addneighbour(nodes[i][j-1]); // left neighbour
+            if (j < cols - 1) nodes[i][j]->addneighbour(nodes[i][j+1]); // right neighbour
+            if (i > 0) nodes[i][j]->addneighbour(nodes[i-1][j]); // upper neighbour
+            if (i < rows - 1) nodes[i][j]->addneighbour(nodes[i+1][j]); // Down neighbour
 
 
             // Diagonal connections
             if (i < rows - 1 && j > 0)
-                nodes[i][j]->addConnection(nodes[i+1][j-1]); // bottom left neighbour
+                nodes[i][j]->addneighbour(nodes[i+1][j-1]); // bottom left neighbour
             if (i < rows - 1 && j < cols - 1)
-                nodes[i][j]->addConnection(nodes[i+1][j+1]); // bottom right neighbour
+                nodes[i][j]->addneighbour(nodes[i+1][j+1]); // bottom right neighbour
             if (i > 0 && j > 0)
-                nodes[i][j]->addConnection(nodes[i-1][j-1]); // top left neighbour
+                nodes[i][j]->addneighbour(nodes[i-1][j-1]); // top left neighbour
             if (i > 0 && j < cols - 1)
-                nodes[i][j]->addConnection(nodes[i-1][j+1]); // top right neighbour
+                nodes[i][j]->addneighbour(nodes[i-1][j+1]); // top right neighbour
 
         }
     }
     }
 }
 
-std::vector<std::vector<node *> > Game::ConstructNodesforTheGraph(std::vector<std::vector<UniqueNode *> > &UniqueNodes)
+std::vector<std::vector<node *> > Game::ConstructNodesforTheGraph(std::vector<std::vector<ImageElement *> > &UniqueNodes)
 {
     int rows = UniqueNodes.size();
     int cols = UniqueNodes[0].size();
@@ -320,21 +318,21 @@ std::vector<std::vector<node *> > Game::ConstructNodesforTheGraph(std::vector<st
 
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
-            if (j > 0) nodes[i][j]->addConnection(nodes[i][j-1]); // left neighbour
-            if (j < cols - 1) nodes[i][j]->addConnection(nodes[i][j+1]); // right neighbour
-            if (i > 0) nodes[i][j]->addConnection(nodes[i-1][j]); // upper neighbour
-            if (i < rows - 1) nodes[i][j]->addConnection(nodes[i+1][j]); // Down neighbour
+            if (j > 0) nodes[i][j]->addneighbour(nodes[i][j-1]); // left neighbour
+            if (j < cols - 1) nodes[i][j]->addneighbour(nodes[i][j+1]); // right neighbour
+            if (i > 0) nodes[i][j]->addneighbour(nodes[i-1][j]); // upper neighbour
+            if (i < rows - 1) nodes[i][j]->addneighbour(nodes[i+1][j]); // Down neighbour
 
 
             // Diagonal connections
             if (i < rows - 1 && j > 0)
-                nodes[i][j]->addConnection(nodes[i+1][j-1]); // bottom left neighbour
+                nodes[i][j]->addneighbour(nodes[i+1][j-1]); // bottom left neighbour
             if (i < rows - 1 && j < cols - 1)
-                nodes[i][j]->addConnection(nodes[i+1][j+1]); // bottom right neighbour
+                nodes[i][j]->addneighbour(nodes[i+1][j+1]); // bottom right neighbour
             if (i > 0 && j > 0)
-                nodes[i][j]->addConnection(nodes[i-1][j-1]); // top left neighbour
+                nodes[i][j]->addneighbour(nodes[i-1][j-1]); // top left neighbour
             if (i > 0 && j < cols - 1)
-                nodes[i][j]->addConnection(nodes[i-1][j+1]); // top right neighbour
+                nodes[i][j]->addneighbour(nodes[i-1][j+1]); // top right neighbour
 
         }
     }

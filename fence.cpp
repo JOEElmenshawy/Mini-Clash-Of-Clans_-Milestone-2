@@ -5,8 +5,7 @@ extern QString fence;
 Fence::Fence() {
     dontincrease=false;
     health = 50;
-    costToPass=new int();
-    *costToPass=60;
+    costToPass=60;
     QPixmap fencephoto (fence);
     fencephoto=fencephoto.scaledToWidth(75);
     fencephoto=fencephoto.scaledToHeight(75);
@@ -17,11 +16,11 @@ Fence::Fence() {
 void Fence::DecreaseHealth(int d){
     dontincrease=true;
     health-=d;
-    *costToPass-=d;
+    costToPass-=d;
     if(health<0)
         health=0;
-    if(*costToPass<10)
-        *costToPass=10;
+    if(costToPass<10)
+        costToPass=10;
     if(health==0)
     Die();
    QTimer*  cooldown = new QTimer(this);
@@ -48,6 +47,6 @@ void Fence::increaseHealth()
     costToPass+=1;
     if(health>50)
         health=10;
-    if(*costToPass>60)
-        *costToPass=60;}
+    if(costToPass>60)
+        costToPass=60;}
 }

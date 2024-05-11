@@ -9,10 +9,7 @@
 #include<QTextStream>
 #include<QGraphicsPixmapItem>
 #include<QGraphicsRectItem>
-#include "castle.h"
-#include "enemy.h"
-#include "defense.h"
-#include "fence.h"
+#include <cstdlib>
 #include"optionswindow.h"
 extern Game *g;
 extern int* hard;
@@ -47,9 +44,7 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::on_pushButton_3_clicked()
 {
-    delete g;
-    this->hide();
-    delete this;
+    exit(1);
 }
 
 

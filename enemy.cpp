@@ -48,41 +48,37 @@ Enemy::Enemy(int d)
     }
     setPos(random_number,random_number2);
 
-   //   setPos(0,0);
     enemyRow=y()/75;
     enemyCol=x()/75;
     qDebug()<<enemyRow<<" "<<enemyCol<<"\n";
-    //printNodes();
-  //   printConnections();
     node* start = g->nodes[enemyRow][enemyCol];
     node* end = g->nodes[g->getCastle()->castleRow][g->getCastle()->castleColumn];
      path = DikestraAlgorithm(start, end);
 
     for (auto it = path.rbegin(); it != path.rend(); it++) {
-         qDebug()<<(*it)->object->name << (*it)->object->id << ": ";
-        qDebug()  << "(" << (*it)->object->x() << ", " << (*it)->object->y() << ")" << "\n";
+         qDebug()<<(*it)->imgelemnt->name << (*it)->imgelemnt->rowAndColOfElement << ": ";
+        qDebug()  << "(" << (*it)->imgelemnt->x() << ", " << (*it)->imgelemnt->y() << ")" << "\n";
     }
        qDebug()  << "\n";
-    itr = path.size()-2;
-    currNode = path[itr];
+    pathiterator = path.size()-2;
+    CurrentNode = path[pathiterator];
 
-    distance = sqrt(pow(this->x() - currNode->object->x(), 2) + pow(this->y() - currNode->object->y(), 2));
+    distancetillCurrentNode = sqrt(pow(this->x() - CurrentNode->imgelemnt->x(), 2) + pow(this->y() - CurrentNode->imgelemnt->y(), 2));
 
     dX = 0;
      dY = 0;
     MoveTimer = new QTimer(this);
     connect( MoveTimer,&QTimer::timeout, this, [=](){
 
-        distance = sqrt(pow(this->x() - currNode->object->x(), 2) + pow(this->y() - currNode->object->y(), 2));
-        if(distance<30)
+        distancetillCurrentNode = sqrt(pow(this->x() - CurrentNode->imgelemnt->x(), 2) + pow(this->y() - CurrentNode->imgelemnt->y(), 2));
+        if(distancetillCurrentNode<35)
         {
-            if(itr != 0){
-                itr--;
-                currNode = path[itr];
+            if(pathiterator != 0){
+                pathiterator--;
+                CurrentNode = path[pathiterator];
             }
         }
         if(enemydied != true){
-           // qDebug()<<"current node:"<<currNode->object->name<<"id:"<<currNode->object->id;
             move();
         }});
     MoveTimer->start((6-g->hardness)*10+50);
@@ -116,29 +112,20 @@ void Enemy::Die(){
 void Enemy::move()
 {
     if(!g->gameover){
-    if(animationiterator%4>1)
-        setPixmap(QPixmap(":/dragon/images/dragon1.png").scaled(75, 75));
 
-    else {
-        setPixmap(QPixmap(":/dragon/images/dragon2.png").scaled(75, 75));
-    }
-    animationiterator++;    dX = (currNode->object->x() - this->x()) / distance;
-    dY = (currNode->object->y() - this->y()) / distance;
+    animationiterator++;    dX = (CurrentNode->imgelemnt->x() - this->x()) / distancetillCurrentNode;
+    dY = (CurrentNode->imgelemnt->y() - this->y()) / distancetillCurrentNode;
 
     float newX = this->x() + 2*dX;
     float newY = this->y() + 2*dY;
 
     bool passFence=false;
-    qDebug()<<currNode->object->name<<path[itr+1]->object->name;
-    if((currNode->object->name=="emptyland"||currNode->object->name=="Castle")&&path[itr+1]->object->name=="emptyland")
+    qDebug()<<CurrentNode->imgelemnt->name<<path[pathiterator+1]->imgelemnt->name;
+    if((CurrentNode->imgelemnt->name=="emptyland"||CurrentNode->imgelemnt->name=="Castle")&&path[pathiterator+1]->imgelemnt->name=="emptyland")
     {
         passFence=true;
 
     }
-      //  if(passFence)
-      //      qDebug()<<"ill pass the fence";
-      //  else
-      //  qDebug()<<"ill not pass the fence";
     continuemove=true;
     bool fenceispartofpath=false;
     QList<QGraphicsItem *> colliding_items = collidingItems();
@@ -147,7 +134,7 @@ void Enemy::move()
             if(!passFence&&fenceItem->name=="fence"){
                 for(auto ptr:path)
                 {
-                    if (ptr->object->x()==fenceItem->x()&&ptr->object->y()==fenceItem->y())
+                    if (ptr->imgelemnt->x()==fenceItem->x()&&ptr->imgelemnt->y()==fenceItem->y())
                         fenceispartofpath=true;
                 }
                 if(fenceispartofpath)
@@ -160,13 +147,18 @@ void Enemy::move()
         }
         else if(Castle* castleItem = dynamic_cast<Castle*>(colliding_items[i])){
             castleItem->DecreaseHealth(damage);
+            return;
             continuemove=false;
         }
     }
-    if(continuemove)
+    if(continuemove){
         setPos(newX, newY);
-  //  setPos(currNode->object->x(),currNode->object->y());
-    }
+        if(animationiterator%4>1)
+            setPixmap(QPixmap(":/dragon/images/dragon1.png").scaled(75, 75));
+
+        else {
+            setPixmap(QPixmap(":/dragon/images/dragon2.png").scaled(75, 75));
+        }} }
 }
 
 
@@ -176,41 +168,40 @@ Enemy::~Enemy()
     delete MoveTimer;
 }
 
-using namespace std;
 std::vector<node*> Enemy::DikestraAlgorithm(node* start, node* end) {
     std::vector<node*> path;
-    std::unordered_map<node*, double> dist;
-    std::unordered_map<node*, node*> prev;
-    std::priority_queue<std::pair<double, node*>, std::vector<std::pair<double, node*>>, std::greater<std::pair<double, node*>>> pq;
+    std::unordered_map<node*, double> distances;
+    std::unordered_map<node*, node*> previous;
+    std::priority_queue<std::pair<double, node*>, std::vector<std::pair<double, node*>>, std::greater<std::pair<double, node*>>> priorityq;
 
     for (const auto& row :g-> nodes) {
         for (const auto& node_ptr : row) {
-            dist[node_ptr] = std::numeric_limits<double>::infinity();
-            prev[node_ptr] = nullptr;
+          distances[node_ptr] = std::numeric_limits<double>::infinity();
+            previous[node_ptr] = nullptr;
         }
     }
 
-    dist[start] = 0;
-    pq.push({0, start});
+    distances[start] = 0;
+    priorityq.push({0, start});
 
-    while (!pq.empty()) {
-        node* u = pq.top().second;
-        pq.pop();
+    while (!priorityq.empty()) {
+        node* n = priorityq.top().second;
+        priorityq.pop();
 
-        if (u == end) {
+        if (n == end) {
             break;
         }
 
-        for (const auto& connection : u->Neighbours) {
-            node* v = connection.second.first;
-            double weight = *connection.second.second;
+        for (const auto& connection : n->Neighbours) {
+            node* n2 = connection.second.first;
+            double weight = connection.second.second;
 
-            double alt = dist[u] + weight;
+            double alternate = distances[n] + weight;
 
-            if (alt < dist[v]) {
-                dist[v] = alt;
-                prev[v] = u;
-                pq.push({alt, v});
+            if (alternate < distances[n2]) {
+               distances[n2] = alternate;
+                previous[n2] = n;
+                priorityq.push({alternate, n2});
             }
         }
     }
@@ -218,18 +209,7 @@ std::vector<node*> Enemy::DikestraAlgorithm(node* start, node* end) {
     node* current = end;
     while (current != nullptr) {
         path.push_back(current);
-        current = prev[current];
-    }
-    for(auto iterator: dist)
-    {
-        if(iterator.second == std::numeric_limits<double>::infinity())
-        {
-          //  qDebug() << iterator.first->id << " has infinite distance";
-        }
-        else
-        {
-          //  qDebug() << iterator.first->id << " total dist=" << iterator.second;
-        }
+        current = previous[current];
     }
 
     return path;

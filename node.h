@@ -1,18 +1,17 @@
 #ifndef NODE_H
 #define NODE_H
 #include<QGraphicsPixmapItem>
-#include"UniqueNode.h"
+#include"Imageelemnt.h"
 class node
 {
 public:
-    node(UniqueNode* _object);
-    UniqueNode* object;
+    node(ImageElement* _object);
+    ImageElement* imgelemnt;
     node* parent;
     int health;
-    std::string id;
-    std::map<std::string, std::pair<node*, int*>> Neighbours; // Store both the node and the weight
-    void addConnection(node* node1);
-    std::pair<node*, int*> getNeighbor(std::string);
+    std::string rowAndColOfElement;
+    std::map<std::string, std::pair<node*, int>> Neighbours; // Store both the node and the weight
+    void addneighbour(node* node1);
 
 
 };

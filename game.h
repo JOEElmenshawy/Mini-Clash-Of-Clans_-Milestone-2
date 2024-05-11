@@ -23,7 +23,7 @@ public:
     int hardness;
     bool powermarker;
     bool gameover;
-     std::vector<std::vector<node*>> ConstructNodesforTheGraph(std::vector<std::vector< UniqueNode*>>& objects);
+     std::vector<std::vector<node*>> ConstructNodesforTheGraph(std::vector<std::vector< ImageElement*>>& objects);
      std::vector<std::vector<node*>> nodes;
      void printNodes() const;
      void printConnections() const ;
@@ -35,7 +35,7 @@ public:
      Castle* getCastle();
     int cannonx,cannony;
      int enemydestroyed;
-    std::vector<std::vector<UniqueNode*>> UniqueNodes;
+    std::vector<std::vector<ImageElement*>> graphimages;
      ~Game();
 
      QTimer* Update;

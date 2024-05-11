@@ -1,8 +1,8 @@
 #ifndef EMPTY_H
 #define EMPTY_H
-#include "UniqueNode.h"
+#include "Imageelemnt.h"
 
-class empty : public UniqueNode
+class empty : public ImageElement
 {
 public:
     empty();
