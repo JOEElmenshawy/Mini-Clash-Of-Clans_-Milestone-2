@@ -29,6 +29,7 @@ extern QString BackgroundPath;
 Game::Game(int h)
 
 {
+    gameover=false;
 
     hardness=h;
     qDebug()<<hardness;
@@ -155,7 +156,7 @@ wintimer->setSingleShot(true);
 wintimer->start(1 * 200* 1000);    // 60 seconds in milliseconds
 Update= new QTimer();
 QObject::connect(Update,SIGNAL(timeout()),this,SLOT(UpdateNeighbours()));
-Update->start(3000);
+//Update->start(000);
 // Connect a slot to the timeout() signal of the timer
 connect(wintimer, &QTimer::timeout, this, [=]()
         {
@@ -176,9 +177,11 @@ connect(wintimer, &QTimer::timeout, this, [=]()
 
 void Game::createEnemy()
 {
+    if(!gameover){
     Enemy* e= new Enemy(hardness+1);
     scene->addItem(e);
     qDebug()<<"create enemy called";
+    }
 }
 void Game::createCitizens()
 {
@@ -191,11 +194,13 @@ void Game::createCitizens()
 
 void Game::createMarkers()
 {
+    if(!gameover){
     HealthMarker* h= new HealthMarker;
-    scene->addItem(h);
+        scene->addItem(h);}
 }
 void Game::mousePressEvent(QMouseEvent *event)
 {
+    if(!gameover){
 increasedamageevery20=0;
     for(int i=0;i<powerup;i++)
     {
@@ -206,11 +211,12 @@ increasedamageevery20=0;
     B->setPos(cannonx+75/2,cannony+75/2);
     scene->addItem(B);
   //  qDebug() << event->pos().x();
-
+    }
 }
 
 bool Game::eventFilter(QObject *obj, QEvent *event)
 {
+    if(!gameover){
     if (event->type() == QEvent::MouseButtonPress) {
         QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
         if (mouseEvent->button() == Qt::LeftButton) {
@@ -219,13 +225,14 @@ bool Game::eventFilter(QObject *obj, QEvent *event)
         }
     }
     return QObject::eventFilter(obj, event);
+    }
 }
 
 void Game::gameOver()
 {
 
 
-
+    gameover=true;
    qDebug()<<" game over";
     scene->clear();
     LostWindow* l=new LostWindow;
@@ -273,6 +280,7 @@ Game::~Game()
 
 void Game::UpdateNeighbours()
 {
+    if(!gameover){
     int rows = UniqueNodes.size();
     int cols = UniqueNodes[0].size();
     for (int i = 0; i < rows; i++) {
@@ -294,6 +302,7 @@ void Game::UpdateNeighbours()
                 nodes[i][j]->addConnection(nodes[i-1][j+1]); // top right neighbour
 
         }
+    }
     }
 }
 
@@ -342,6 +351,7 @@ void Game::showview()
 
 void Game::boostshootpower()
 {
+    if(!gameover){
     qDebug()<<"bonus damage started";
     extradamage+=30;
     boostdamagetimer = new QTimer(this);
@@ -366,6 +376,7 @@ void Game::boostshootpower()
 
          qDebug()<<"bonus damage stopped";
             });
+    }
 }
 
 Castle *Game::getCastle()

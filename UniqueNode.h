@@ -10,7 +10,7 @@ public:
     std::string id;
     bool inner;
     QString name;
-    int costToPass;
+    int* costToPass;
     UniqueNode();
     UniqueNode(const UniqueNode& other); // copy constructor
     ~UniqueNode();

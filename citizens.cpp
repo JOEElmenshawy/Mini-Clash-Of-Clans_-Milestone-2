@@ -17,6 +17,7 @@ Citizens::Citizens() {
 
     MoveTimer = new QTimer(this);
     connect( MoveTimer,&QTimer::timeout, this, [=](){
+        if(!g->gameover){
 
         if (shouldlookForFence)
             {
@@ -33,12 +34,13 @@ Citizens::Citizens() {
         }
         if(!citizendied){
             move();
-        }}});
+        }}}});
     MoveTimer->start(50);
 }
 
 void Citizens::move()
 {
+    if(!g->gameover){
     if(animationiterator%4>1)
         setPixmap(QPixmap(":/citizen/images/citizen 1.png").scaled(80, 80));
 
@@ -70,7 +72,7 @@ void Citizens::move()
             }
             }
         }
-    if(g->nodes[targetFenceRow][targetFenceCol]->object->costToPass==60||g->nodes[targetFenceRow][targetFenceCol]->object->costToPass==10){
+    if(*g->nodes[targetFenceRow][targetFenceCol]->object->costToPass==60||*g->nodes[targetFenceRow][targetFenceCol]->object->costToPass==10){
         shouldlookForFence=true;  setPixmap(QPixmap(":/new/images/images/citizenWorker.png").scaled(80, 80));
         return;}
   //  qDebug()<<"cuurent node"<<currNode->id;
@@ -86,10 +88,12 @@ void Citizens::move()
     {
         setPos(newX, newY);
     }
+    }
 }
 
 void Citizens::lookFence()
-{    QList<QGraphicsItem*> colliding_items = collidingItems();
+{
+    if(!g->gameover){    QList<QGraphicsItem*> colliding_items = collidingItems();
     for (int i = 0, n = colliding_items.size(); i < n; ++i) {
         if (typeid(*(colliding_items[i])) == typeid(Enemy)) {
             Enemy *enemy = dynamic_cast<Enemy*>(colliding_items[i]);
@@ -108,7 +112,7 @@ void Citizens::lookFence()
             if(node_ptr->object->name=="fence")
             {
              //   qDebug()<<"wer are in a fence that has health:"<<node_ptr->object->costToPass;
-                if (node_ptr->object->costToPass<60&&node_ptr->object->costToPass>10&&(sqrt(pow(this->x() -node_ptr->object->x(), 2) + pow(this->y() - node_ptr->object->y(), 2))<min))
+                if (*node_ptr->object->costToPass<60&&*node_ptr->object->costToPass>10&&(sqrt(pow(this->x() -node_ptr->object->x(), 2) + pow(this->y() - node_ptr->object->y(), 2))<min))
                 {
                   //  qDebug()<<"fence health:"<<node_ptr->object->costToPass;
                     min=sqrt(pow(this->x() -node_ptr->object->x(), 2) + pow(this->y() - node_ptr->object->y(), 2));
@@ -134,6 +138,7 @@ void Citizens::lookFence()
         currNode = path[itr];
         distance = sqrt(pow(this->x() - currNode->object->x(), 2) + pow(this->y() - currNode->object->y(), 2));
       //  qDebug()<<"rached here without crash";
+    }
     }
 }
 
@@ -164,7 +169,7 @@ std::vector<node*> Citizens::dijkstra(node* start, node* end) {
 
         for (const auto& connection : u->Neighbours) {
             node* v = connection.second.first;
-            double weight = connection.second.second;
+            double weight = *connection.second.second;
 
             double alt = dist[u] + weight;
 

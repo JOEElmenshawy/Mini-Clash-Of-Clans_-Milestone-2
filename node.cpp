@@ -21,7 +21,7 @@ void node::addConnection(node* otherNode){
    // qDebug()<<otherNode->id<<otherNode->object->name<<"cost to pass:"<< otherNode->object->costToPass;
 }
 
-std::pair<node *, int> node::getNeighbor(std::string id)
+std::pair<node *, int*> node::getNeighbor(std::string id)
 {
     return Neighbours[id];
 }

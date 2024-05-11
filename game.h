@@ -22,6 +22,7 @@ public:
     double increasedamageevery20;
     int hardness;
     bool powermarker;
+    bool gameover;
      std::vector<std::vector<node*>> ConstructNodesforTheGraph(std::vector<std::vector< UniqueNode*>>& objects);
      std::vector<std::vector<node*>> nodes;
      void printNodes() const;

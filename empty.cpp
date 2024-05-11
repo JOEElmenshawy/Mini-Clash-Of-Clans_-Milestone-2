@@ -2,7 +2,8 @@
 extern QString land;
 empty::empty()
 {
-    costToPass=10;
+    costToPass=new int();
+    *costToPass=10;
     QPixmap landphoto (land);
     landphoto=landphoto.scaledToWidth(75);
     landphoto=landphoto.scaledToHeight(75);

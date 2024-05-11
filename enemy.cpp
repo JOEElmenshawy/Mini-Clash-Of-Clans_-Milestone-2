@@ -115,6 +115,7 @@ void Enemy::Die(){
 }
 void Enemy::move()
 {
+    if(!g->gameover){
     if(animationiterator%4>1)
         setPixmap(QPixmap(":/dragon/images/dragon1.png").scaled(75, 75));
 
@@ -165,7 +166,7 @@ void Enemy::move()
     if(continuemove)
         setPos(newX, newY);
   //  setPos(currNode->object->x(),currNode->object->y());
-
+    }
 }
 
 
@@ -202,7 +203,7 @@ std::vector<node*> Enemy::DikestraAlgorithm(node* start, node* end) {
 
         for (const auto& connection : u->Neighbours) {
             node* v = connection.second.first;
-            double weight = connection.second.second;
+            double weight = *connection.second.second;
 
             double alt = dist[u] + weight;
 

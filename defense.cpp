@@ -5,7 +5,8 @@
 extern Game *g;
 
 Defense::Defense() {
-    costToPass=2000;
+    costToPass=new int();
+    *costToPass=2000;
     name="cannon";
     QPixmap defencephoto (":/Defense Images/images/1.png");
     defencephoto=defencephoto.scaledToWidth(75);

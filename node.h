@@ -10,9 +10,9 @@ public:
     node* parent;
     int health;
     std::string id;
-    std::map<std::string, std::pair<node*, int>> Neighbours; // Store both the node and the weight
+    std::map<std::string, std::pair<node*, int*>> Neighbours; // Store both the node and the weight
     void addConnection(node* node1);
-    std::pair<node*, int> getNeighbor(std::string);
+    std::pair<node*, int*> getNeighbor(std::string);
 
 
 };
