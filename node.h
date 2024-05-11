@@ -7,8 +7,6 @@ class node
 public:
     node(ImageElement* _object);
     ImageElement* imgelemnt;
-    node* parent;
-    int health;
     std::string rowAndColOfElement;
     std::map<std::string, std::pair<node*, int>> Neighbours; // Store both the node and the weight
     void addneighbour(node* node1);

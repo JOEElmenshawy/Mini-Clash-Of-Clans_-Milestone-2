@@ -13,7 +13,10 @@ WonLevel::WonLevel(QWidget *parent)
 {
     delete g;
     ui->setupUi(this);
-
+    ui->LevelLabel->setText("Level "+ QString::number(*hard));
+    ui->LevelLabel->setVisible(true);
+    ui->pushButton->setText("Proceed to Level" + QString::number(*hard+1));
+    qDebug()<<"Level "+ QString::number(*hard);
     QPixmap p(":/new/images/images/NextLevel.png");
     p=p.scaled(ui->nextlevellabel->size());
     ui->nextlevellabel->setPixmap(p);
@@ -24,6 +27,7 @@ WonLevel::WonLevel(QWidget *parent)
     Q->setAudioOutput(audio);
     audio->setVolume(Volume);
     Q->play();
+
 }
 
 WonLevel::~WonLevel()

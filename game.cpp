@@ -153,7 +153,7 @@ wintimer = new QTimer(this);
 
 // Set a single-shot timer for 5 minutes
 wintimer->setSingleShot(true);
-wintimer->start(120* 1000);
+wintimer->start(5 * 60 * 1000);
 Update= new QTimer();
 QObject::connect(Update,SIGNAL(timeout()),this,SLOT(UpdateNeighbours()));
 Update->start(2000);

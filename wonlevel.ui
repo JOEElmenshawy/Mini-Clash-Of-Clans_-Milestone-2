@@ -79,6 +79,19 @@
     <string>Next Level</string>
    </property>
   </widget>
+  <widget class="QLabel" name="LevelLabel">
+   <property name="geometry">
+    <rect>
+     <x>240</x>
+     <y>600</y>
+     <width>221</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

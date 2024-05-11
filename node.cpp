@@ -1,7 +1,7 @@
 #include "node.h"
 #include "game.h"
 extern Game* g;
-node::node(ImageElement* _object) : imgelemnt(_object), parent(nullptr),rowAndColOfElement(_object->rowAndColOfElement)
+node::node(ImageElement* _object) : imgelemnt(_object),rowAndColOfElement(_object->rowAndColOfElement)
 {
 }
 
