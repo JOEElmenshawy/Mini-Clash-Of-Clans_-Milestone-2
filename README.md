@@ -41,9 +41,9 @@ In this game, players try to defeat enemy troops (dragons), who are fighting to 
 ## 📸 Screenshots
 
 <p float="left">
-  <img src="screenshot2.png" width="700" />
-  <img src="screenshot1.png" width="700" />
-  <img src="screenshot3.png" width="700" />
+  <img src="screenshot2.png" width="600" />
+  <img src="screenshot1.png" width="600" />
+  <img src="screenshot3.png" width="600" />
 </p>
 
 ---
