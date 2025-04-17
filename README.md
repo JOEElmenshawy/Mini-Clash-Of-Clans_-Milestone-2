@@ -56,3 +56,4 @@ In this game, players try to defeat enemy troops (dragons), who are fighting to 
 ## Contact
 
 For inquiries, contact Mahmoud Hossam at [mahmoudhossam@aucegypt.edu](mailto:mahmoudhossam@aucegypt.edu)
+Contact Yousef Elmenshawy at [yousefelmenshawi@aucegypt.edu](mailto:yousefelmenshawi@aucegypt.edu)
